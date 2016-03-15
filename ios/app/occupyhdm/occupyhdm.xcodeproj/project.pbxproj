@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		C218408F1C981C2E00019473 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218408E1C981C2E00019473 /* AppDelegate.swift */; };
-		C21840911C981C2E00019473 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21840901C981C2E00019473 /* ViewController.swift */; };
 		C21840941C981C2E00019473 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21840921C981C2E00019473 /* Main.storyboard */; };
 		C21840971C981C2E00019473 /* occupyhdm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C21840951C981C2E00019473 /* occupyhdm.xcdatamodeld */; };
 		C21840991C981C2E00019473 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C21840981C981C2E00019473 /* Assets.xcassets */; };
 		C218409C1C981C2E00019473 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C218409A1C981C2E00019473 /* LaunchScreen.storyboard */; };
 		C21840A71C981C2E00019473 /* occupyhdmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21840A61C981C2E00019473 /* occupyhdmTests.swift */; };
 		C21840B21C981C2E00019473 /* occupyhdmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21840B11C981C2E00019473 /* occupyhdmUITests.swift */; };
+		C24890C11C9820FA00B057A1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24890C01C9820FA00B057A1 /* MapKit.framework */; };
+		C24890C31C9822F300B057A1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24890C21C9822F300B057A1 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +38,6 @@
 /* Begin PBXFileReference section */
 		C218408B1C981C2E00019473 /* occupyhdm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = occupyhdm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C218408E1C981C2E00019473 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C21840901C981C2E00019473 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C21840931C981C2E00019473 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C21840961C981C2E00019473 /* occupyhdm.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = occupyhdm.xcdatamodel; sourceTree = "<group>"; };
 		C21840981C981C2E00019473 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +49,8 @@
 		C21840AD1C981C2E00019473 /* occupyhdmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = occupyhdmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21840B11C981C2E00019473 /* occupyhdmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = occupyhdmUITests.swift; sourceTree = "<group>"; };
 		C21840B31C981C2E00019473 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C24890C01C9820FA00B057A1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		C24890C21C9822F300B057A1 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C24890C11C9820FA00B057A1 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +82,7 @@
 		C21840821C981C2E00019473 = {
 			isa = PBXGroup;
 			children = (
+				C24890C01C9820FA00B057A1 /* MapKit.framework */,
 				C218408D1C981C2E00019473 /* occupyhdm */,
 				C21840A51C981C2E00019473 /* occupyhdmTests */,
 				C21840B01C981C2E00019473 /* occupyhdmUITests */,
@@ -100,12 +104,12 @@
 			isa = PBXGroup;
 			children = (
 				C218408E1C981C2E00019473 /* AppDelegate.swift */,
-				C21840901C981C2E00019473 /* ViewController.swift */,
 				C21840921C981C2E00019473 /* Main.storyboard */,
 				C21840981C981C2E00019473 /* Assets.xcassets */,
 				C218409A1C981C2E00019473 /* LaunchScreen.storyboard */,
 				C218409D1C981C2E00019473 /* Info.plist */,
 				C21840951C981C2E00019473 /* occupyhdm.xcdatamodeld */,
+				C24890C21C9822F300B057A1 /* LoginViewController.swift */,
 			);
 			path = occupyhdm;
 			sourceTree = "<group>";
@@ -259,7 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C21840911C981C2E00019473 /* ViewController.swift in Sources */,
+				C24890C31C9822F300B057A1 /* LoginViewController.swift in Sources */,
 				C21840971C981C2E00019473 /* occupyhdm.xcdatamodeld in Sources */,
 				C218408F1C981C2E00019473 /* AppDelegate.swift in Sources */,
 			);
@@ -407,6 +411,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.occupyhdm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -418,6 +423,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.occupyhdm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -488,6 +494,7 @@
 				C21840B81C981C2E00019473 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C21840B91C981C2E00019473 /* Build configuration list for PBXNativeTarget "occupyhdmTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +503,7 @@
 				C21840BB1C981C2E00019473 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C21840BC1C981C2E00019473 /* Build configuration list for PBXNativeTarget "occupyhdmUITests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +512,7 @@
 				C21840BE1C981C2E00019473 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
