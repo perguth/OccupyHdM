@@ -9,9 +9,11 @@
 import UIKit
 import MapKit
 
-class MainViewController: UIViewController, MKMapViewDelegate {
+class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +21,8 @@ class MainViewController: UIViewController, MKMapViewDelegate {
         // Do any additional setup after loading the view
         self.mapView.setRegion(MKCoordinateRegionMake(CLLocationCoordinate2DMake(48.742393, 9.101142), MKCoordinateSpanMake(0.005, 0.005)), animated: false)
         self.mapView.delegate = self
+        
+        self.locationManager.delegate = self
         
         let jsonString = "{ \"locations\" : [ { \"name\" : \"Location 1\", \"lat\" : 48.742070, \"lon\" : 9.102263 }, { \"name\" : \"Location 2\", \"lat\" : 48.740995, \"lon\" : 9.101709 } ] }"
         let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -41,6 +45,16 @@ class MainViewController: UIViewController, MKMapViewDelegate {
         }
         catch {
             
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse
+        {
+            self.mapView.showsUserLocation = true
+            self.locationManager.startUpdatingLocation()
         }
     }
 
@@ -81,5 +95,14 @@ class MainViewController: UIViewController, MKMapViewDelegate {
         aView?.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
 
         return aView
+    }
+    
+    //CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse
+        {
+            self.mapView.showsUserLocation = true
+            manager.startUpdatingLocation()
+        }
     }
 }
