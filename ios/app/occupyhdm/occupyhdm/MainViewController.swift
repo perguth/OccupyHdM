@@ -18,6 +18,7 @@ class MainViewController: UIViewController, MKMapViewDelegate {
 
         // Do any additional setup after loading the view
         self.mapView.setRegion(MKCoordinateRegionMake(CLLocationCoordinate2DMake(48.742393, 9.101142), MKCoordinateSpanMake(0.005, 0.005)), animated: false)
+        self.mapView.delegate = self
         
         let jsonString = "{ \"locations\" : [ { \"name\" : \"Location 1\", \"lat\" : 48.742070, \"lon\" : 9.102263 }, { \"name\" : \"Location 2\", \"lat\" : 48.740995, \"lon\" : 9.101709 } ] }"
         let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -64,4 +65,21 @@ class MainViewController: UIViewController, MKMapViewDelegate {
     }
     
     //MKMapViewDelegate
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isEqual(mapView.userLocation)
+        {
+            return nil
+        }
+        
+        var aView = mapView.dequeueReusableAnnotationViewWithIdentifier("pinView")
+        
+        if aView == nil
+        {
+            aView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinView")
+        }
+        
+        aView?.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
+
+        return aView
+    }
 }
