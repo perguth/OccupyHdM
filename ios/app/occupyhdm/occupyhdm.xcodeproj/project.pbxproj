@@ -16,6 +16,9 @@
 		C21840B21C981C2E00019473 /* occupyhdmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21840B11C981C2E00019473 /* occupyhdmUITests.swift */; };
 		C24890C11C9820FA00B057A1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24890C01C9820FA00B057A1 /* MapKit.framework */; };
 		C24890C31C9822F300B057A1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24890C21C9822F300B057A1 /* LoginViewController.swift */; };
+		C266BD331CA147F700CD8832 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266BD321CA147F700CD8832 /* MainViewController.swift */; };
+		C266BD351CA1523900CD8832 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266BD341CA1523900CD8832 /* CustomAnnotation.swift */; };
+		C266BD381CA1568500CD8832 /* pin_green.png in Resources */ = {isa = PBXBuildFile; fileRef = C266BD371CA1568500CD8832 /* pin_green.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 		C21840B31C981C2E00019473 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C24890C01C9820FA00B057A1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C24890C21C9822F300B057A1 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C266BD321CA147F700CD8832 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		C266BD341CA1523900CD8832 /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		C266BD371CA1568500CD8832 /* pin_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_green.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,9 @@
 				C218409D1C981C2E00019473 /* Info.plist */,
 				C21840951C981C2E00019473 /* occupyhdm.xcdatamodeld */,
 				C24890C21C9822F300B057A1 /* LoginViewController.swift */,
+				C266BD321CA147F700CD8832 /* MainViewController.swift */,
+				C266BD341CA1523900CD8832 /* CustomAnnotation.swift */,
+				C266BD361CA1567800CD8832 /* images */,
 			);
 			path = occupyhdm;
 			sourceTree = "<group>";
@@ -130,6 +139,14 @@
 				C21840B31C981C2E00019473 /* Info.plist */,
 			);
 			path = occupyhdmUITests;
+			sourceTree = "<group>";
+		};
+		C266BD361CA1567800CD8832 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				C266BD371CA1568500CD8832 /* pin_green.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +256,7 @@
 				C218409C1C981C2E00019473 /* LaunchScreen.storyboard in Resources */,
 				C21840991C981C2E00019473 /* Assets.xcassets in Resources */,
 				C21840941C981C2E00019473 /* Main.storyboard in Resources */,
+				C266BD381CA1568500CD8832 /* pin_green.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +283,9 @@
 			files = (
 				C24890C31C9822F300B057A1 /* LoginViewController.swift in Sources */,
 				C21840971C981C2E00019473 /* occupyhdm.xcdatamodeld in Sources */,
+				C266BD351CA1523900CD8832 /* CustomAnnotation.swift in Sources */,
 				C218408F1C981C2E00019473 /* AppDelegate.swift in Sources */,
+				C266BD331CA147F700CD8832 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
