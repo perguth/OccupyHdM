@@ -12,6 +12,7 @@ import MapKit
 class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var accuracyLabel: UILabel!
     
     var locationManager = CLLocationManager()
     
@@ -23,6 +24,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         self.mapView.delegate = self
         
         self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         
         let jsonString = "{ \"locations\" : [ { \"name\" : \"Location 1\", \"lat\" : 48.742070, \"lon\" : 9.102263 }, { \"name\" : \"Location 2\", \"lat\" : 48.740995, \"lon\" : 9.101709 } ] }"
         let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -92,9 +94,14 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             aView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinView")
         }
         
+        aView?.canShowCallout = true
         aView?.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
 
         return aView
+    }
+    
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+        self.accuracyLabel.text = "current accuracy: " + String(userLocation.location!.horizontalAccuracy)
     }
     
     //CLLocationManagerDelegate
