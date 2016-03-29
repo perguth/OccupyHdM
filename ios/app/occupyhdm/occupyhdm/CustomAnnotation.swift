@@ -12,10 +12,23 @@ import MapKit
 class CustomAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
+    var state: Bool
     
     init(coordinate : CLLocationCoordinate2D, title : String)
     {
         self.coordinate = coordinate
         self.title = title
+        self.state = false
+    }
+    
+    func toggleState(state: Bool?)
+    {
+        if state == nil
+        {
+            self.state = !self.state
+            return
+        }
+        
+        self.state = state!
     }
 }

@@ -80,7 +80,7 @@
                                     <constraint firstAttribute="height" constant="40" id="pqu-4R-JcX"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgC-IN-qx5">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgC-IN-qx5">
                                 <rect key="frame" x="20" y="80" width="560" height="37"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="v6K-SF-DFq">
@@ -142,6 +142,7 @@
                     <navigationItem key="navigationItem" title="OccupyHdM" id="H45-Vs-cZe"/>
                     <connections>
                         <outlet property="accuracyLabel" destination="MKJ-Q2-ylY" id="mYS-mi-G4M"/>
+                        <outlet property="accuracyWarning" destination="dgC-IN-qx5" id="xDi-Dn-v1F"/>
                         <outlet property="mapView" destination="ehT-co-OU5" id="0s2-x3-UKV"/>
                     </connections>
                 </viewController>

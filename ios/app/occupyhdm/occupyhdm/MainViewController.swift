@@ -13,6 +13,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var accuracyLabel: UILabel!
+    @IBOutlet weak var accuracyWarning: UIView!
     
     var locationManager = CLLocationManager()
     
@@ -80,8 +81,10 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         
     }
     
-    //MKMapViewDelegate
+    // MARK: - MKMapViewDelegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        // changing picture of map annotations
+        
         if annotation.isEqual(mapView.userLocation)
         {
             return nil
@@ -94,17 +97,66 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             aView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinView")
         }
         
-        aView?.canShowCallout = true
-        aView?.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
+        aView!.canShowCallout = true
+        
+        let currentAnnotation = aView!.annotation as! CustomAnnotation
+        
+        if currentAnnotation.state
+        {
+            aView!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
+        }
+        else
+        {
+            aView!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_red", ofType: "png")!)
+        }
 
         return aView
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        self.accuracyLabel.text = "current accuracy: " + String(userLocation.location!.horizontalAccuracy)
+        let accuracy = userLocation.location!.horizontalAccuracy
+        
+        self.accuracyLabel.text = "current accuracy: " + String(accuracy)
+        
+        if accuracy >= 100.0
+        {
+            self.accuracyWarning.hidden = false
+        }
+        else
+        {
+            self.accuracyWarning.hidden = true
+            
+            for annotation in self.mapView.annotations
+            {
+                if annotation.isEqual(userLocation)
+                {
+                    continue
+                }
+                
+                let customAnnotation = annotation as! CustomAnnotation
+                
+                let pinLocation = CLLocation(latitude: customAnnotation.coordinate.latitude, longitude: customAnnotation.coordinate.longitude)
+                let userLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+                
+                let distance = pinLocation.distanceFromLocation(userLocation)
+                
+                if distance <= 20.0
+                {
+                    customAnnotation.toggleState(true)
+                    self.mapView.viewForAnnotation(customAnnotation)!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
+                }
+                else
+                {
+                    customAnnotation.toggleState(false)
+                    self.mapView.viewForAnnotation(customAnnotation)!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_red", ofType: "png")!)
+                }
+                
+                NSLog("distance: " + String(pinLocation.distanceFromLocation(userLocation)))
+            }
+        }
     }
     
-    //CLLocationManagerDelegate
+    // MARK: - CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.AuthorizedWhenInUse
         {
