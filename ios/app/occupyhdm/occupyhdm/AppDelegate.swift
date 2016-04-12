@@ -29,6 +29,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userDefaults.setInteger(28, forKey: "distance")
         }
         
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("main")
+        
+        if NSUserDefaults.standardUserDefaults().stringForKey("username") == nil
+        {
+            viewController = storyboard.instantiateViewControllerWithIdentifier("login")
+        }
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window?.rootViewController = viewController
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
 

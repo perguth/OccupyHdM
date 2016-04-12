@@ -11,7 +11,6 @@ import UIKit
 class LoginViewController: UIViewController
 {
     @IBOutlet weak var usernameTextfield: UITextField!
-    @IBOutlet weak var usernamePassword: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,4 +34,12 @@ class LoginViewController: UIViewController
     }
     */
 
+    @IBAction func startGame(sender: AnyObject) {
+        if usernameTextfield.text != ""
+        {
+            NSUserDefaults.standardUserDefaults().setObject(usernameTextfield.text, forKey: "username")
+            
+            self.performSegueWithIdentifier("showLoginToMain", sender: self)
+        }
+    }
 }
