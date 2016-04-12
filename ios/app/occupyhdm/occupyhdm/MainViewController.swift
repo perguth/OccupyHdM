@@ -27,6 +27,8 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         
+        self.disableUserAnnotationView(self.mapView.userLocation)
+        
         let jsonString = "{ \"locations\" : [ { \"name\" : \"Location 1\", \"lat\" : 48.742070, \"lon\" : 9.102263 }, { \"name\" : \"Location 2\", \"lat\" : 48.740995, \"lon\" : 9.101709 } ] }"
         let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -85,7 +87,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         // changing picture of map annotations
         
-        if annotation.isEqual(mapView.userLocation)
+        if annotation.isEqual(self.mapView.userLocation)
         {
             return nil
         }
@@ -114,6 +116,8 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+        self.disableUserAnnotationView(userLocation)
+        
         let accuracy = userLocation.location!.horizontalAccuracy
         
         self.accuracyLabel.text = "current accuracy: " + String(accuracy)
@@ -140,7 +144,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
                 
                 let distance = pinLocation.distanceFromLocation(userLocation)
                 
-                if distance <= 20.0
+                if distance <= 25.0
                 {
                     customAnnotation.toggleState(true)
                     self.mapView.viewForAnnotation(customAnnotation)!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
@@ -162,6 +166,15 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         {
             self.mapView.showsUserLocation = true
             manager.startUpdatingLocation()
+        }
+    }
+    
+    // MARK: - custom methods
+    func disableUserAnnotationView(userLocation: MKUserLocation)
+    {
+        if let userAnnotationView = self.mapView.viewForAnnotation(userLocation)
+        {
+            userAnnotationView.enabled = false
         }
     }
 }
