@@ -24,30 +24,14 @@ class SettingsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         let accuracy = Float(NSUserDefaults.standardUserDefaults().integerForKey("accuracy"))
-        
-        if accuracy != 0.0
-        {
-            sliderAccuracy.value = accuracy
-            labelAccuracy.text = String(Int(accuracy))
-        }
-        else
-        {
-            sliderAccuracy.value = 62.5
-            labelAccuracy.text = "63"
-        }
+
+        sliderAccuracy.value = accuracy
+        labelAccuracy.text = String(Int(accuracy))
         
         let distance = Float(NSUserDefaults.standardUserDefaults().integerForKey("distance"))
         
-        if distance != 0.0
-        {
-            sliderDistance.value = distance
-            labelDistance.text = String(Int(distance))
-        }
-        else
-        {
-            sliderDistance.value = 27.5
-            labelDistance.text = "28"
-        }
+        sliderDistance.value = distance
+        labelDistance.text = String(Int(distance))
     }
 
     override func didReceiveMemoryWarning() {

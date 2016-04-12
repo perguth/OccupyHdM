@@ -122,7 +122,9 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         
         self.accuracyLabel.text = "current accuracy: " + String(accuracy)
         
-        if accuracy >= 100.0
+        let savedAccuracy = NSUserDefaults.standardUserDefaults().integerForKey("accuracy")
+        
+        if accuracy >= Double(savedAccuracy)
         {
             self.accuracyWarning.hidden = false
         }
@@ -144,7 +146,9 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
                 
                 let distance = pinLocation.distanceFromLocation(userLocation)
                 
-                if distance <= 25.0
+                let savedDistance = NSUserDefaults.standardUserDefaults().integerForKey("distance")
+                
+                if distance <= Double(savedDistance)
                 {
                     customAnnotation.toggleState(true)
                     self.mapView.viewForAnnotation(customAnnotation)!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)

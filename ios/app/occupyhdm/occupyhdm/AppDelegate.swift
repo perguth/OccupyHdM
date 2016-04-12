@@ -17,6 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if userDefaults.integerForKey("accuracy") == 0
+        {
+            userDefaults.setInteger(63, forKey: "accuracy")
+        }
+        
+        if userDefaults.integerForKey("distance") == 0
+        {
+            userDefaults.setInteger(28, forKey: "distance")
+        }
+        
         return true
     }
 
