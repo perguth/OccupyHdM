@@ -10,7 +10,9 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var labelAccuracy: UILabel!
+    @IBOutlet weak var sliderAccuracy: UISlider!
     @IBOutlet weak var labelDistance: UILabel!
+    @IBOutlet weak var sliderDistance: UISlider!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +23,31 @@ class SettingsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 160.0
-
+        let accuracy = Float(NSUserDefaults.standardUserDefaults().integerForKey("accuracy"))
+        
+        if accuracy != 0.0
+        {
+            sliderAccuracy.value = accuracy
+            labelAccuracy.text = String(Int(accuracy))
+        }
+        else
+        {
+            sliderAccuracy.value = 62.5
+            labelAccuracy.text = "63"
+        }
+        
+        let distance = Float(NSUserDefaults.standardUserDefaults().integerForKey("distance"))
+        
+        if distance != 0.0
+        {
+            sliderDistance.value = distance
+            labelDistance.text = String(Int(distance))
+        }
+        else
+        {
+            sliderDistance.value = 27.5
+            labelDistance.text = "28"
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,10 +123,16 @@ class SettingsTableViewController: UITableViewController {
     */
 
     @IBAction func accuracyChanged(sender: UISlider) {
-        self.labelAccuracy.text = String(Int(sender.value))
+        let accuracy = Int(sender.value)
+        
+        self.labelAccuracy.text = String(accuracy)
+        NSUserDefaults.standardUserDefaults().setInteger(accuracy, forKey: "accuracy")
     }
     
     @IBAction func distanceChanged(sender: UISlider) {
-        self.labelDistance.text = String(Int(sender.value))
+        let distance = Int(sender.value)
+        
+        self.labelDistance.text = String(distance)
+        NSUserDefaults.standardUserDefaults().setInteger(distance, forKey: "distance")
     }
 }
