@@ -14,6 +14,8 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var accuracyWarning: UIView!
     @IBOutlet weak var accuracyOverlay: UIView!
+    @IBOutlet weak var labelUsername: UILabel!
+    @IBOutlet weak var labelScore: UILabel!
     
     var locationManager = CLLocationManager()
     
@@ -21,6 +23,10 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         super.viewDidLoad()
 
         // Do any additional setup after loading the view
+        
+        self.labelUsername.text = NSUserDefaults.standardUserDefaults().stringForKey("username")
+        self.labelScore.text = String(NSUserDefaults.standardUserDefaults().integerForKey("score"))
+        
         self.mapView.setRegion(MKCoordinateRegionMake(CLLocationCoordinate2DMake(48.742393, 9.101142), MKCoordinateSpanMake(0.005, 0.005)), animated: false)
         self.mapView.delegate = self
         
