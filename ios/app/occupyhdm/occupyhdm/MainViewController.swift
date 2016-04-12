@@ -12,8 +12,8 @@ import MapKit
 class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var accuracyLabel: UILabel!
     @IBOutlet weak var accuracyWarning: UIView!
+    @IBOutlet weak var accuracyOverlay: UIView!
     
     var locationManager = CLLocationManager()
     
@@ -120,17 +120,17 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         
         let accuracy = userLocation.location!.horizontalAccuracy
         
-        self.accuracyLabel.text = "current accuracy: " + String(accuracy)
-        
         let savedAccuracy = NSUserDefaults.standardUserDefaults().integerForKey("accuracy")
         
         if accuracy >= Double(savedAccuracy)
         {
             self.accuracyWarning.hidden = false
+            self.accuracyOverlay.hidden = false
         }
         else
         {
             self.accuracyWarning.hidden = true
+            self.accuracyOverlay.hidden = true
             
             for annotation in self.mapView.annotations
             {
