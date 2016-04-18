@@ -11,6 +11,7 @@ import UIKit
 class LoginViewController: UIViewController
 {
     @IBOutlet weak var usernameTextfield: UITextField!
+    @IBOutlet weak var usernameMissingHint: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,10 @@ class LoginViewController: UIViewController
             NSUserDefaults.standardUserDefaults().setObject(usernameTextfield.text, forKey: "username")
             
             self.performSegueWithIdentifier("showLoginToMain", sender: self)
+        }
+        else
+        {
+            usernameMissingHint.hidden = false
         }
     }
 }
