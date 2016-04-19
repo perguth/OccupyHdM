@@ -18,48 +18,11 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     @IBOutlet weak var labelScore: UILabel!
     
     var locationManager = CLLocationManager()
-    
-    func makeRestRequest(query: String) {
-        let baseUrl: String = "http://localhost:8080"
-
-        let endpoint: String = baseUrl + query
-        let url = NSURL(string: endpoint)
-        let urlRequest = NSURLRequest(URL: url!)
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: config)
-
-        let task = session.dataTaskWithRequest(urlRequest) {
-            (data, response, error) in
-            if (error != nil) {
-                print("error calling GET on " + query)
-                print(error)
-                return
-            }
-            if (data == nil) {
-                print("Error: did not receive data")
-                return
-            }
-
-            do {
-                if let res = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String: AnyObject] {
-                    print(res)
-
-                    // TODO: save it somewhere and/or use a callback
-                    return
-                }
-
-                print("error trying to convert data to JSON")
-                return
-            } catch  {
-                print("error trying to convert data to JSON")
-                return
-            }
-        }
-        task.resume()
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(NSUserDefaults.standardUserDefaults().objectForKey("goals"))
 
         // Do any additional setup after loading the view
         
@@ -77,7 +40,11 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         let jsonString = "{ \"locations\" : [ { \"name\" : \"Location 1\", \"lat\" : 48.742070, \"lon\" : 9.102263 }, { \"name\" : \"Location 2\", \"lat\" : 48.740995, \"lon\" : 9.101709 } ] }"
         let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
         
-        makeRestRequest("/goals")
+        RestApiManager.sharedInstance.makeRestRequest("/goals") {
+            (result: AnyObject) in
+            print(result)
+            NSUserDefaults.standardUserDefaults().setObject(result, forKey: "goals")
+        }
 
         do {
             let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
