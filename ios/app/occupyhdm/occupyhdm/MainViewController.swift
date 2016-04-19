@@ -21,8 +21,6 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(NSUserDefaults.standardUserDefaults().objectForKey("goals"))
 
         // Do any additional setup after loading the view
         
