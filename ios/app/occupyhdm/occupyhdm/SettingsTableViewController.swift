@@ -13,6 +13,9 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var sliderAccuracy: UISlider!
     @IBOutlet weak var labelDistance: UILabel!
     @IBOutlet weak var sliderDistance: UISlider!
+    @IBOutlet weak var labelRefreshRate: UILabel!
+    @IBOutlet weak var sliderRefreshRate: UISlider!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +35,11 @@ class SettingsTableViewController: UITableViewController {
         
         sliderDistance.value = distance
         labelDistance.text = String(Int(distance))
+        
+        let refreshRate = NSUserDefaults.standardUserDefaults().integerForKey("refreshRate")
+        
+        sliderRefreshRate.value = Float(refreshRate)
+        labelRefreshRate.text = String(refreshRate)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,7 +56,7 @@ class SettingsTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return 4
     }
 
     /*
@@ -118,5 +126,12 @@ class SettingsTableViewController: UITableViewController {
         
         self.labelDistance.text = String(distance)
         NSUserDefaults.standardUserDefaults().setInteger(distance, forKey: "distance")
+    }
+    
+    @IBAction func refreshRateChanged(sender: UISlider) {
+        let refreshRate = Int(sender.value)
+        
+        self.labelRefreshRate.text = String(refreshRate)
+        NSUserDefaults.standardUserDefaults().setInteger(refreshRate, forKey: "refreshRate")
     }
 }

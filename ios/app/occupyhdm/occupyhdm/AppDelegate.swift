@@ -29,6 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userDefaults.setInteger(28, forKey: "distance")
         }
         
+        if userDefaults.integerForKey("refreshRate") == 0
+        {
+            userDefaults.setInteger(15, forKey: "refreshRate")
+        }
+        
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         var viewController = storyboard.instantiateViewControllerWithIdentifier("main")
         

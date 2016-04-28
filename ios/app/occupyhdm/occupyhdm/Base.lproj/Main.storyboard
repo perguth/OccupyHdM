@@ -256,13 +256,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="62.5" minValue="25" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="IYy-dv-aln" userLabel="Slider Accuracy">
-                                                    <rect key="frame" x="96" y="7" width="436" height="31"/>
+                                                    <rect key="frame" x="126" y="7" width="406" height="31"/>
                                                     <connections>
                                                         <action selector="accuracyChanged:" destination="VHI-NK-hgt" eventType="valueChanged" id="kAz-bY-9bF"/>
                                                     </connections>
                                                 </slider>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNW-dL-Xeh">
-                                                    <rect key="frame" x="540" y="11.5" width="32" height="21"/>
+                                                    <rect key="frame" x="540" y="12" width="32" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="GWY-dC-F4w"/>
                                                     </constraints>
@@ -270,8 +270,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqu-SH-Y90">
-                                                    <rect key="frame" x="577" y="11.5" width="15" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqu-SH-Y90">
+                                                    <rect key="frame" x="577" y="12" width="15" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="TQV-Pb-CrT"/>
                                                     </constraints>
@@ -280,9 +280,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accuracy:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkc-Ec-GfJ">
-                                                    <rect key="frame" x="8" y="11.5" width="80" height="21"/>
+                                                    <rect key="frame" x="8" y="12" width="110" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="uvQ-32-9Kd"/>
+                                                        <constraint firstAttribute="width" constant="110" id="uvQ-32-9Kd"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -309,8 +309,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajX-Hu-cVt">
-                                                    <rect key="frame" x="577" y="11.5" width="15" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajX-Hu-cVt">
+                                                    <rect key="frame" x="577" y="12" width="15" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="H71-Fj-jrQ"/>
                                                     </constraints>
@@ -319,7 +319,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oqk-05-9lx">
-                                                    <rect key="frame" x="540" y="11.5" width="32" height="21"/>
+                                                    <rect key="frame" x="540" y="12" width="32" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="FyX-fc-p2e"/>
                                                     </constraints>
@@ -328,16 +328,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GhQ-rh-xbz">
-                                                    <rect key="frame" x="8" y="11.5" width="80" height="21"/>
+                                                    <rect key="frame" x="8" y="12" width="110" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="89i-CL-m6B"/>
+                                                        <constraint firstAttribute="width" constant="110" id="89i-CL-m6B"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="27.5" minValue="5" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Sm6-5j-8tS" userLabel="Slider Distance">
-                                                    <rect key="frame" x="96" y="7" width="436" height="31"/>
+                                                    <rect key="frame" x="126" y="7" width="406" height="31"/>
                                                     <connections>
                                                         <action selector="distanceChanged:" destination="VHI-NK-hgt" eventType="valueChanged" id="YMb-3v-03d"/>
                                                     </connections>
@@ -356,18 +356,72 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="150" id="jAH-BV-g3r">
-                                        <rect key="frame" x="0.0" y="152" width="600" height="150"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="jAH-BV-g3r">
+                                        <rect key="frame" x="0.0" y="152" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jAH-BV-g3r" id="usy-q1-5uS">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZ8-h9-3pf">
-                                                    <rect key="frame" x="8" y="8" width="584" height="130"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QWx-VZ-Bsb">
+                                                    <rect key="frame" x="577" y="12" width="15" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="15" id="oq4-SR-VRG"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refresh Rate:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiT-oI-YvN" userLabel="Refresh Rate:">
+                                                    <rect key="frame" x="8" y="12" width="110" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="110" id="gjC-O6-vTa"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMv-3C-Vzp">
+                                                    <rect key="frame" x="540" y="12" width="32" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="g18-MM-e9p"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="15.5" minValue="1" maxValue="30" translatesAutoresizingMaskIntoConstraints="NO" id="6na-0E-req" userLabel="Slider Refresh Rate">
+                                                    <rect key="frame" x="126" y="7" width="406" height="31"/>
+                                                    <connections>
+                                                        <action selector="refreshRateChanged:" destination="VHI-NK-hgt" eventType="valueChanged" id="dIK-AI-TSA"/>
+                                                    </connections>
+                                                </slider>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QWx-VZ-Bsb" firstAttribute="centerY" secondItem="usy-q1-5uS" secondAttribute="centerY" id="0hw-Vu-X2a"/>
+                                                <constraint firstItem="vMv-3C-Vzp" firstAttribute="leading" secondItem="6na-0E-req" secondAttribute="trailing" constant="10" id="7Tn-sI-hAy"/>
+                                                <constraint firstItem="vMv-3C-Vzp" firstAttribute="centerY" secondItem="usy-q1-5uS" secondAttribute="centerY" id="CgE-au-B8i"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="QWx-VZ-Bsb" secondAttribute="trailing" id="LDA-N1-ewJ"/>
+                                                <constraint firstItem="QWx-VZ-Bsb" firstAttribute="leading" secondItem="vMv-3C-Vzp" secondAttribute="trailing" constant="5" id="LIz-Rj-UHp"/>
+                                                <constraint firstItem="6na-0E-req" firstAttribute="centerY" secondItem="usy-q1-5uS" secondAttribute="centerY" id="MpT-1o-3sR"/>
+                                                <constraint firstItem="6na-0E-req" firstAttribute="leading" secondItem="BiT-oI-YvN" secondAttribute="trailing" constant="10" id="NoF-MY-YcV"/>
+                                                <constraint firstItem="BiT-oI-YvN" firstAttribute="centerY" secondItem="usy-q1-5uS" secondAttribute="centerY" id="c3x-ob-LUk"/>
+                                                <constraint firstItem="BiT-oI-YvN" firstAttribute="leading" secondItem="usy-q1-5uS" secondAttribute="leadingMargin" id="xq5-DL-JoJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="170" id="FDi-Lj-KEP">
+                                        <rect key="frame" x="0.0" y="196" width="600" height="170"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FDi-Lj-KEP" id="Weh-Wj-Pn9">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="170"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wm-Pe-Noi">
+                                                    <rect key="frame" x="8" y="8" width="584" height="149"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="130" id="sDQ-lq-8hJ"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="130" id="fWL-FN-cJh"/>
                                                     </constraints>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Technical details:">
@@ -424,7 +478,21 @@ Cg
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
-                                                        <fragment content=" is used to check if the user is in range to activate a target.">
+                                                        <fragment>
+                                                            <string key="content"> is used to check if the user is in range to activate a target.
+- </string>
+                                                            <attributes>
+                                                                <font key="NSFont" size="16" name="HelveticaNeue"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="Refresh Rate">
+                                                            <attributes>
+                                                                <font key="NSFont" size="16" name="HelveticaNeue-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=" is used to update the state of the goals on the map in a given time interval.">
                                                             <attributes>
                                                                 <font key="NSFont" size="16" name="HelveticaNeue"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3" tighteningFactorForTruncation="0.0"/>
@@ -435,9 +503,9 @@ Cg
                                                 </textView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="KZ8-h9-3pf" firstAttribute="leading" secondItem="usy-q1-5uS" secondAttribute="leadingMargin" id="P7d-hh-SgS"/>
-                                                <constraint firstItem="KZ8-h9-3pf" firstAttribute="top" secondItem="usy-q1-5uS" secondAttribute="topMargin" id="nax-Bm-V2d"/>
-                                                <constraint firstItem="KZ8-h9-3pf" firstAttribute="trailing" secondItem="usy-q1-5uS" secondAttribute="trailingMargin" id="sjO-Wu-WyP"/>
+                                                <constraint firstItem="7wm-Pe-Noi" firstAttribute="leading" secondItem="Weh-Wj-Pn9" secondAttribute="leadingMargin" id="Jlt-3c-IW1"/>
+                                                <constraint firstItem="7wm-Pe-Noi" firstAttribute="trailing" secondItem="Weh-Wj-Pn9" secondAttribute="trailingMargin" id="lTA-bP-wIX"/>
+                                                <constraint firstItem="7wm-Pe-Noi" firstAttribute="top" secondItem="Weh-Wj-Pn9" secondAttribute="topMargin" id="o7t-kr-qzT"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -453,8 +521,10 @@ Cg
                     <connections>
                         <outlet property="labelAccuracy" destination="ZNW-dL-Xeh" id="hc7-JG-ZqC"/>
                         <outlet property="labelDistance" destination="Oqk-05-9lx" id="oKA-bZ-zx2"/>
+                        <outlet property="labelRefreshRate" destination="vMv-3C-Vzp" id="R1x-8l-Ufz"/>
                         <outlet property="sliderAccuracy" destination="IYy-dv-aln" id="ulK-Nj-M0F"/>
                         <outlet property="sliderDistance" destination="Sm6-5j-8tS" id="oBe-En-NkE"/>
+                        <outlet property="sliderRefreshRate" destination="6na-0E-req" id="XxC-nK-Dck"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gge-5W-euq" userLabel="First Responder" sceneMemberID="firstResponder"/>

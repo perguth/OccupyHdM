@@ -35,34 +35,9 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         
         self.disableUserAnnotationView(self.mapView.userLocation)
         
-        let jsonString = "{ \"locations\" : [ { \"name\" : \"Location 1\", \"lat\" : 48.742070, \"lon\" : 9.102263 }, { \"name\" : \"Location 2\", \"lat\" : 48.740995, \"lon\" : 9.101709 } ] }"
-        let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
+        let refreshRate = NSUserDefaults.standardUserDefaults().integerForKey("refreshRate")
         
-        RestApiManager.sharedInstance.makeRestRequest("/goals") {
-            (result: AnyObject) in
-            print(result)
-            NSUserDefaults.standardUserDefaults().setObject(result, forKey: "goals")
-        }
-
-        do {
-            let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-            
-            if let locations = jsonDictionary["locations"] as? NSArray
-            {
-                for location in locations
-                {
-                    self.mapView.addAnnotation(CustomAnnotation(
-                        coordinate: CLLocationCoordinate2DMake(
-                            (location["lat"] as! NSNumber).doubleValue,
-                            (location["lon"] as! NSNumber).doubleValue),
-                        title: location["name"] as! String)
-                    )
-                }
-            }
-        }
-        catch {
-            
-        }
+        NSTimer.scheduledTimerWithTimeInterval(Double(refreshRate), target: self, selector: #selector(MainViewController.update), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -90,10 +65,6 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         // Pass the selected object to the new view controller.
     }
     */
-
-    @IBAction func logout(sender: AnyObject) {
-        
-    }
     
     // MARK: - MKMapViewDelegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -191,6 +162,38 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         if let userAnnotationView = self.mapView.viewForAnnotation(userLocation)
         {
             userAnnotationView.enabled = false
+        }
+    }
+    
+    func update()
+    {
+        let jsonString = "{ \"locations\" : [ { \"name\" : \"Location 1\", \"lat\" : 48.742070, \"lon\" : 9.102263 }, { \"name\" : \"Location 2\", \"lat\" : 48.740995, \"lon\" : 9.101709 } ] }"
+        let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        RestApiManager.sharedInstance.makeRestRequest("/goals") {
+            (result: AnyObject) in
+            print(result)
+            NSUserDefaults.standardUserDefaults().setObject(result, forKey: "goals")
+        }
+        
+        do {
+            let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+            
+            if let locations = jsonDictionary["locations"] as? NSArray
+            {
+                for location in locations
+                {
+                    self.mapView.addAnnotation(CustomAnnotation(
+                        coordinate: CLLocationCoordinate2DMake(
+                            (location["lat"] as! NSNumber).doubleValue,
+                            (location["lon"] as! NSNumber).doubleValue),
+                        title: location["name"] as! String)
+                    )
+                }
+            }
+        }
+        catch {
+            
         }
     }
 }
