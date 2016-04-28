@@ -18,6 +18,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     @IBOutlet weak var labelScore: UILabel!
     
     var locationManager = CLLocationManager()
+    var timer: NSTimer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         
         let refreshRate = NSUserDefaults.standardUserDefaults().integerForKey("refreshRate")
         
-        NSTimer.scheduledTimerWithTimeInterval(Double(refreshRate), target: self, selector: #selector(MainViewController.update), userInfo: nil, repeats: true)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(Double(refreshRate), target: self, selector: #selector(MainViewController.update), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -48,6 +49,10 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             self.mapView.showsUserLocation = true
             self.locationManager.startUpdatingLocation()
         }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        self.timer!.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
