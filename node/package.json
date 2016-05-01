@@ -1,14 +1,16 @@
 {
-  "name": "OccupyHdM REST backend",
-  "version": "1.0.0",
+  "name": "OccupyHdM-REST-backend",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "standard"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
+    "console-stamp": "^0.2.1",
     "restify": "^4.0.4"
   }
 }
