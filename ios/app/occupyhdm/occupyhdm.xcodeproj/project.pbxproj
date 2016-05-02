@@ -19,6 +19,7 @@
 		C266BD331CA147F700CD8832 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266BD321CA147F700CD8832 /* MainViewController.swift */; };
 		C266BD351CA1523900CD8832 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266BD341CA1523900CD8832 /* CustomAnnotation.swift */; };
 		C266BD381CA1568500CD8832 /* pin_green.png in Resources */ = {isa = PBXBuildFile; fileRef = C266BD371CA1568500CD8832 /* pin_green.png */; };
+		C2783FB21CD768A400FAFF77 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C2783FB11CD768A400FAFF77 /* logo.png */; };
 		C29566931CBCF4CF00996A96 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29566921CBCF4CF00996A96 /* SettingsTableViewController.swift */; };
 		C2EA1CAA1CAA8882005C6D3D /* pin_red.png in Resources */ = {isa = PBXBuildFile; fileRef = C2EA1CA91CAA8882005C6D3D /* pin_red.png */; };
 		CE05CA3C1CC638D4008CB71E /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05CA3B1CC638D4008CB71E /* RestApiManager.swift */; };
@@ -60,6 +61,7 @@
 		C266BD321CA147F700CD8832 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C266BD341CA1523900CD8832 /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		C266BD371CA1568500CD8832 /* pin_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_green.png; sourceTree = "<group>"; };
+		C2783FB11CD768A400FAFF77 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		C29566921CBCF4CF00996A96 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		C2EA1CA91CAA8882005C6D3D /* pin_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_red.png; sourceTree = "<group>"; };
 		CE05CA3B1CC638D4008CB71E /* RestApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiManager.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				C266BD321CA147F700CD8832 /* MainViewController.swift */,
 				C266BD341CA1523900CD8832 /* CustomAnnotation.swift */,
 				C29566921CBCF4CF00996A96 /* SettingsTableViewController.swift */,
+				C2783FB11CD768A400FAFF77 /* logo.png */,
 				C266BD361CA1567800CD8832 /* images */,
 				CE05CA3B1CC638D4008CB71E /* RestApiManager.swift */,
 			);
@@ -265,6 +268,7 @@
 			files = (
 				C218409C1C981C2E00019473 /* LaunchScreen.storyboard in Resources */,
 				C21840991C981C2E00019473 /* Assets.xcassets in Resources */,
+				C2783FB21CD768A400FAFF77 /* logo.png in Resources */,
 				C21840941C981C2E00019473 /* Main.storyboard in Resources */,
 				C2EA1CAA1CAA8882005C6D3D /* pin_red.png in Resources */,
 				C266BD381CA1568500CD8832 /* pin_green.png in Resources */,
@@ -443,11 +447,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = occupyhdm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.occupyhdm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -458,11 +463,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = occupyhdm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.occupyhdm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
