@@ -1,11 +1,3 @@
-//
-//  RestApiManager.swift
-//  occupyhdm
-//
-//  Created by user on 19.04.16.
-//  Copyright © 2016 occupyhdm. All rights reserved.
-//
-
 import Foundation
 
 class RestApiManager: NSObject {

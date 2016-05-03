@@ -1,11 +1,3 @@
-//
-//  CustomAnnotation.swift
-//  occupyhdm
-//
-//  Created by Fabian Kugler on 22.03.16.
-//  Copyright © 2016 occupyhdm. All rights reserved.
-//
-
 import UIKit
 import MapKit
 

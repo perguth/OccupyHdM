@@ -1,11 +1,3 @@
-//
-//  SettingsTableViewController.swift
-//  occupyhdm
-//
-//  Created by Fabian Kugler on 12.04.16.
-//  Copyright © 2016 occupyhdm. All rights reserved.
-//
-
 import UIKit
 
 class SettingsTableViewController: UITableViewController {

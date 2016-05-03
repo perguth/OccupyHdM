@@ -1,11 +1,3 @@
-//
-//  LoginViewController.swift
-//  occupyhdm
-//
-//  Created by Fabian Kugler on 15.03.16.
-//  Copyright © 2016 occupyhdm. All rights reserved.
-//
-
 import UIKit
 
 class LoginViewController: UIViewController
