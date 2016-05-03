@@ -34,3 +34,10 @@
 Our app is called `OccupyHdM`. We as the app operators preconfigure various points of interest (POI) on the HdM campus. The players can then claim those spots by moving into close proximity.
 
 When starting the app the users will set a username which will be used as an identifier in our backend. The backend is reachable for the app via a REST API. The app will regularly pull the current set of POIs from the API. When players claim a spot, an API call will be made to update the dataset on the server. They will also gain a certain amount of points which will be only stored locally.
+
+
+### IOS
+
+We use [SwiftLint](https://github.com/realm/SwiftLint) which lints the code in the build phase - installation of the tool is not required for building though.
+
+For a more comfortable programming experience whitespace trimming should be enabled, see: http://stackoverflow.com/a/11830067
