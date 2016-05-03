@@ -26,13 +26,14 @@ server.get('/goals', function (req, res, next) {
 server.get('/own/:location/:name', function (req, res, next) {
   var locationName = req.params.location.replace('%20', ' ')
   var userName = req.params.name
-  var data = db.get('locations')
+  var data = db.get()
 
-  for (var id in data) {
-    if (data[id].name !== locationName) continue
+  for (var id in data.locations) {
+    console.log('id', id)
+    if (data.locations[id].name !== locationName) continue
 
-    data[id].owner = userName
-    db.set('locations', data)
+    data.locations[id].owner = userName
+    db.set(data)
     break
   }
   res.send('saved')
