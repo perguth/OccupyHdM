@@ -13,10 +13,13 @@ server.use(restify.acceptParser(server.acceptable))
 server.use(restify.queryParser())
 server.use(restify.bodyParser())
 
+server.get('/', function (req, res, next) {
+  res.send('This is the API for the PMA application.')
+})
+
 // get all locations
 server.get('/goals', function (req, res, next) {
   res.send(db.get())
-  next()
 })
 
 // claim a location
@@ -32,9 +35,9 @@ server.get('/own/:location/:name', function (req, res, next) {
     db.set('locations', data)
     break
   }
-  next()
+  res.send('saved')
 })
 
-server.listen(8080, function () {
+server.listen(63772, function () {
   console.log('%s listening at %s', server.name, server.url)
 })
