@@ -34,11 +34,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         
-        self.disableUserAnnotationView(self.mapView.userLocation)
-        
-        let refreshRate = NSUserDefaults.standardUserDefaults().integerForKey("refreshRate")
-        
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(Double(refreshRate), target: self, selector: #selector(MainViewController.update), userInfo: nil, repeats: true)
+        self.disableUserAnnotationView(self.mapView.userLocation)        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -49,6 +45,11 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             self.mapView.showsUserLocation = true
             self.locationManager.startUpdatingLocation()
         }
+        
+        let refreshRate = NSUserDefaults.standardUserDefaults().integerForKey("refreshRate")
+        
+        self.update()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(Double(refreshRate), target: self, selector: #selector(MainViewController.update), userInfo: nil, repeats: true)
     }
     
     override func viewDidDisappear(animated: Bool) {
