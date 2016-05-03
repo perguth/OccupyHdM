@@ -1,9 +1,7 @@
 var restify = require('restify')
 var Database = require('./database')
-require('console-stamp')(console)
 
 var db = new Database()
-console.log(db.get())
 
 var server = restify.createServer({
   name: 'OccupyHdM-REST-backend',
@@ -29,14 +27,13 @@ server.get('/own/:location/:name', function (req, res, next) {
   var data = db.get()
 
   for (var id in data.locations) {
-    console.log('id', id)
     if (data.locations[id].name !== locationName) continue
 
     data.locations[id].owner = userName
     db.set(data)
     break
   }
-  res.send('saved')
+  res.send({success: 'success'})
 })
 
 server.listen(63772, function () {
