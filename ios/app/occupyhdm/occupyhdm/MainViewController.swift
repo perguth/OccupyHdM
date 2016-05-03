@@ -170,42 +170,44 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         func updateOrSetLocationAnnotation(location: AnyObject) {
             let name = location["name"] as! String
             let customAnnotations = NSMutableArray(array: self.mapView.annotations)
+            var found = false
             
             customAnnotations.removeObject(self.mapView.userLocation)
             
-            var found = false
-            
             for annotation in customAnnotations as NSArray as! [CustomAnnotation]
             {
-                if name == annotation.name
+                if name == annotation.name!
                 {
                     found = true
+                    
                     annotation.coordinate = CLLocationCoordinate2DMake(
                         (location["lat"] as! NSNumber).doubleValue,
                         (location["lon"] as! NSNumber).doubleValue)
                     annotation.owner = location["owner"] as? String
                     annotation.title = name + " - Owner: " + annotation.owner!
                     
-                    self.setAnnotationImage(annotation)
+                    dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+                        self.setAnnotationImage(annotation)
+                    })
                 }
             }
             
             if !found
             {
-                print("add annotation")
-                self.mapView.addAnnotation(CustomAnnotation(
+                let annotation = CustomAnnotation(
                     coordinate: CLLocationCoordinate2DMake(
                         (location["lat"] as! NSNumber).doubleValue,
                         (location["lon"] as! NSNumber).doubleValue),
-                        name: location["name"] as! String,
-                        owner: location["owner"] as! String)
-                )
+                    name: location["name"] as! String,
+                    owner: location["owner"] as! String)
+                
+                dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+                    self.mapView.addAnnotation(annotation)
+                })
             }
         }
         
-        RestApiManager.sharedInstance.makeRestRequest("/goals") {
-        (result: AnyObject) in
-            dispatch_async(dispatch_get_main_queue(), {
+        RestApiManager.sharedInstance.makeRestRequest("/goals") { (result: AnyObject) in
                 // needs to run on the main thread or else it won't render
                 
                 if let locations = result["locations"] as? NSArray
@@ -215,7 +217,6 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
                         updateOrSetLocationAnnotation(location)
                     }
                 }
-            })
         }
     }
     
@@ -223,16 +224,18 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     {
         let username = NSUserDefaults.standardUserDefaults().stringForKey("username")
         
-        if let annotationView = self.mapView.viewForAnnotation(annotation)
-        {
-            if annotation.owner == username
+        dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+            if let annotationView = self.mapView.viewForAnnotation(annotation)
             {
-                annotationView.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
+                if annotation.owner == username
+                {
+                    annotationView.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
+                }
+                else
+                {
+                    annotationView.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_red", ofType: "png")!)
+                }
             }
-            else
-            {
-                annotationView.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_red", ofType: "png")!)
-            }
-        }
+        })
     }
 }
