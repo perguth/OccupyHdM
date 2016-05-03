@@ -54,7 +54,7 @@ class LoginViewController: UIViewController
     
     func keyboardWillShow(notification: NSNotification)
     {
-        self.topLayoutConstraint.constant = -150
+        self.topLayoutConstraint.constant = -200
     }
     
     func keyboardWillHide(notification: NSNotification)
