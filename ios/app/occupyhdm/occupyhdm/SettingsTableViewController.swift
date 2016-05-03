@@ -16,6 +16,10 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var labelRefreshRate: UILabel!
     @IBOutlet weak var sliderRefreshRate: UISlider!
     
+    @IBAction func Logout(sender: AnyObject) {
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "username")
+        NSUserDefaults.standardUserDefaults().setInteger(0, forKey: "score")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

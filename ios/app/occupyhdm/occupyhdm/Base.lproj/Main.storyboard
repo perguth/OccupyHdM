@@ -506,12 +506,40 @@ Cg
                                                         </fragment>
                                                     </attributedString>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="fWL-FN-cJh"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="7wm-Pe-Noi" firstAttribute="leading" secondItem="Weh-Wj-Pn9" secondAttribute="leadingMargin" id="Jlt-3c-IW1"/>
                                                 <constraint firstItem="7wm-Pe-Noi" firstAttribute="trailing" secondItem="Weh-Wj-Pn9" secondAttribute="trailingMargin" id="lTA-bP-wIX"/>
                                                 <constraint firstItem="7wm-Pe-Noi" firstAttribute="top" secondItem="Weh-Wj-Pn9" secondAttribute="topMargin" id="o7t-kr-qzT"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="at1-DZ-WEu">
+                                        <rect key="frame" x="0.0" y="366" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="at1-DZ-WEu" id="qGf-th-SDc">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Tp-RC-sW8">
+                                                    <rect key="frame" x="276" y="7" width="48" height="30"/>
+                                                    <state key="normal" title="Logout"/>
+                                                    <connections>
+                                                        <action selector="Logout:" destination="VHI-NK-hgt" eventType="touchUpInside" id="c1R-jf-CrL"/>
+                                                        <segue destination="Bzd-Dw-C2E" kind="show" id="TzN-rg-sbn"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7Tp-RC-sW8" firstAttribute="top" secondItem="qGf-th-SDc" secondAttribute="topMargin" constant="8" id="F41-0j-m8K"/>
+                                                <constraint firstItem="7Tp-RC-sW8" firstAttribute="centerX" secondItem="qGf-th-SDc" secondAttribute="centerX" id="Wcl-5t-AAQ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="7Tp-RC-sW8" secondAttribute="bottom" constant="8" id="nLj-zH-g1S"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
