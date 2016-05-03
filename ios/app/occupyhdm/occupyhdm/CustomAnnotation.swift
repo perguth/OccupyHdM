@@ -6,9 +6,8 @@ class CustomAnnotation: NSObject, MKAnnotation {
     var title: String?
     var name: String?
     var owner: String?
-    
-    init(coordinate : CLLocationCoordinate2D, name : String, owner : String)
-    {
+
+    init(coordinate: CLLocationCoordinate2D, name: String, owner: String) {
         self.coordinate = coordinate
         self.title = name + " - Owner: " + owner
         self.name = name

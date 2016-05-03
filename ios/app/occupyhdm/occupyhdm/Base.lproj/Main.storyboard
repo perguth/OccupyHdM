@@ -529,7 +529,7 @@ Cg
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Tp-RC-sW8">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Tp-RC-sW8">
                                                     <rect key="frame" x="276" y="7" width="48" height="30"/>
                                                     <state key="normal" title="Logout"/>
                                                     <connections>
@@ -539,9 +539,9 @@ Cg
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7Tp-RC-sW8" firstAttribute="top" secondItem="qGf-th-SDc" secondAttribute="topMargin" constant="8" id="F41-0j-m8K"/>
+                                                <constraint firstItem="7Tp-RC-sW8" firstAttribute="top" secondItem="qGf-th-SDc" secondAttribute="topMargin" constant="-1" id="F41-0j-m8K"/>
                                                 <constraint firstItem="7Tp-RC-sW8" firstAttribute="centerX" secondItem="qGf-th-SDc" secondAttribute="centerX" id="Wcl-5t-AAQ"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="7Tp-RC-sW8" secondAttribute="bottom" constant="8" id="nLj-zH-g1S"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="7Tp-RC-sW8" secondAttribute="bottom" constant="-1" id="nLj-zH-g1S"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
