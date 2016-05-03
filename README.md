@@ -38,6 +38,8 @@ When starting the app the users will set a username which will be used as an ide
 
 ### IOS
 
+<img src=ios.png align=right width=400>
+
 We use [SwiftLint](https://github.com/realm/SwiftLint) which lints the code in the build phase - installation of the tool is not required for building though.
 
 For a more comfortable programming experience whitespace trimming should be enabled, see: http://stackoverflow.com/a/11830067
