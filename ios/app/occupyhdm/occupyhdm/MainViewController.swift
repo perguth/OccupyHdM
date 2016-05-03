@@ -138,6 +138,10 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
                         (result: AnyObject) in
                     }
                     self.setAnnotationImage(customAnnotation)
+                    var score = NSUserDefaults.standardUserDefaults().integerForKey("score")
+                    score += 50
+                    self.labelScore.text = String(score)
+                    NSUserDefaults.standardUserDefaults().setInteger(score, forKey: "score")
                 }
             }
         }
