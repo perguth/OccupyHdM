@@ -147,8 +147,6 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
                     customAnnotation.toggleState(false)
                     self.mapView.viewForAnnotation(customAnnotation)!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_red", ofType: "png")!)
                 }
-                
-                NSLog("distance: " + String(pinLocation.distanceFromLocation(userLocation)))
             }
         }
     }
@@ -173,7 +171,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     
     func update()
     {
-        let jsonString = "{ \"locations\" : [ { \"name\" : \"Location 1\", \"lat\" : 48.742070, \"lon\" : 9.102263 }, { \"name\" : \"Location 2\", \"lat\" : 48.740995, \"lon\" : 9.101709 } ] }"
+        let jsonString = "{ \"locations\" : [ { \"name\" : \"Wohnheim\", \"lat\" : 48.742070, \"lon\" : 9.102263, \"owner\" : \"Spieler 1\" }, { \"name\" : \"Neubau\", \"lat\" : 48.740995, \"lon\" : 9.101709, \"owner\" : \"Spieler 2\" } ] }"
         let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
         
         RestApiManager.sharedInstance.makeRestRequest("/goals") {
@@ -193,7 +191,8 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
                         coordinate: CLLocationCoordinate2DMake(
                             (location["lat"] as! NSNumber).doubleValue,
                             (location["lon"] as! NSNumber).doubleValue),
-                        title: location["name"] as! String)
+                        title: location["name"] as! String,
+                        subtitle: location["owner"] as! String)
                     )
                 }
             }
