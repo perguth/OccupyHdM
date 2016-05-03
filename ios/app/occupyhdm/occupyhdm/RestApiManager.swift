@@ -12,7 +12,7 @@ class RestApiManager: NSObject {
     static let sharedInstance = RestApiManager()
     
     func makeRestRequest(query: String, callback: (result: AnyObject) -> Void) {
-        let baseUrl: String = "http://localhost:8080"
+        let baseUrl: String = "https://pma.perguth.de"
         
         let endpoint: String = baseUrl + query
         let url = NSURL(string: endpoint)

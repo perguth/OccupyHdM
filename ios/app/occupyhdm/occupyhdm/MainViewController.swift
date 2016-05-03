@@ -92,14 +92,7 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         
         let currentAnnotation = aView!.annotation as! CustomAnnotation
         
-        if currentAnnotation.state
-        {
-            aView!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
-        }
-        else
-        {
-            aView!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_red", ofType: "png")!)
-        }
+        self.setAnnotationImage(currentAnnotation)
 
         return aView
     }
@@ -113,8 +106,8 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         
         if accuracy >= Double(savedAccuracy)
         {
-            self.accuracyWarning.hidden = false
-            self.accuracyOverlay.hidden = false
+            //self.accuracyWarning.hidden = false
+            //self.accuracyOverlay.hidden = false
         }
         else
         {
@@ -139,13 +132,12 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
                 
                 if distance <= Double(savedDistance)
                 {
-                    customAnnotation.toggleState(true)
-                    self.mapView.viewForAnnotation(customAnnotation)!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
-                }
-                else
-                {
-                    customAnnotation.toggleState(false)
-                    self.mapView.viewForAnnotation(customAnnotation)!.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_red", ofType: "png")!)
+                    let username = NSUserDefaults.standardUserDefaults().stringForKey("username")
+                    let queryString = "/own/" + customAnnotation.name! + "/" + username!
+                    RestApiManager.sharedInstance.makeRestRequest(queryString) {
+                        (result: AnyObject) in
+                    }
+                    self.setAnnotationImage(customAnnotation)
                 }
             }
         }
@@ -171,34 +163,66 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     
     func update()
     {
-        let jsonString = "{ \"locations\" : [ { \"name\" : \"Wohnheim\", \"lat\" : 48.742070, \"lon\" : 9.102263, \"owner\" : \"Spieler 1\" }, { \"name\" : \"Neubau\", \"lat\" : 48.740995, \"lon\" : 9.101709, \"owner\" : \"Spieler 2\" } ] }"
-        let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
-        
         RestApiManager.sharedInstance.makeRestRequest("/goals") {
-            (result: AnyObject) in
-            print(result)
-            NSUserDefaults.standardUserDefaults().setObject(result, forKey: "goals")
-        }
-        
-        do {
-            let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-            
-            if let locations = jsonDictionary["locations"] as? NSArray
-            {
-                for location in locations
+        (result: AnyObject) in
+            dispatch_async(dispatch_get_main_queue(), {
+                if let locations = result["locations"] as? NSArray
                 {
-                    self.mapView.addAnnotation(CustomAnnotation(
-                        coordinate: CLLocationCoordinate2DMake(
-                            (location["lat"] as! NSNumber).doubleValue,
-                            (location["lon"] as! NSNumber).doubleValue),
-                        title: location["name"] as! String,
-                        subtitle: location["owner"] as! String)
-                    )
+                    for location in locations
+                    {
+                        let name = location["name"] as! String
+                        
+                        let customAnnotations = NSMutableArray(array: self.mapView.annotations)
+                        customAnnotations.removeObject(self.mapView.userLocation)
+                        
+                        var found = false
+                        
+                        for annotation in customAnnotations as NSArray as! [CustomAnnotation]
+                        {
+                            if name == annotation.name
+                            {
+                                found = true
+                                annotation.coordinate = CLLocationCoordinate2DMake(
+                                    (location["lat"] as! NSNumber).doubleValue,
+                                    (location["lon"] as! NSNumber).doubleValue)
+                                annotation.owner = location["owner"] as? String
+                                annotation.title = name + " - Owner: " + annotation.owner!
+                                
+                                self.setAnnotationImage(annotation)
+                            }
+                        }
+                        
+                        if !found
+                        {
+                            print("add annotation")
+                            self.mapView.addAnnotation(CustomAnnotation(
+                                coordinate: CLLocationCoordinate2DMake(
+                                    (location["lat"] as! NSNumber).doubleValue,
+                                    (location["lon"] as! NSNumber).doubleValue),
+                                name: location["name"] as! String,
+                                owner: location["owner"] as! String)
+                            )
+                        }
+                    }
                 }
-            }
+            })
         }
-        catch {
-            
+    }
+    
+    func setAnnotationImage(annotation: CustomAnnotation)
+    {
+        let username = NSUserDefaults.standardUserDefaults().stringForKey("username")
+        
+        if let annotationView = self.mapView.viewForAnnotation(annotation)
+        {
+            if annotation.owner == username
+            {
+                annotationView.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_green", ofType: "png")!)
+            }
+            else
+            {
+                annotationView.image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("pin_red", ofType: "png")!)
+            }
         }
     }
 }

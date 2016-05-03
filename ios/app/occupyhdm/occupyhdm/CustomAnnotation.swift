@@ -12,25 +12,14 @@ import MapKit
 class CustomAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
-    var subtitle: String?
-    var state: Bool
+    var name: String?
+    var owner: String?
     
-    init(coordinate : CLLocationCoordinate2D, title : String, subtitle : String)
+    init(coordinate : CLLocationCoordinate2D, name : String, owner : String)
     {
         self.coordinate = coordinate
-        self.title = title
-        self.subtitle = subtitle
-        self.state = false
-    }
-    
-    func toggleState(state: Bool?)
-    {
-        if state == nil
-        {
-            self.state = !self.state
-            return
-        }
-        
-        self.state = state!
+        self.title = name + " - Owner: " + owner
+        self.name = name
+        self.owner = owner
     }
 }
