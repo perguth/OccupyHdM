@@ -534,7 +534,7 @@ Cg
                                                     <state key="normal" title="Logout"/>
                                                     <connections>
                                                         <action selector="Logout:" destination="VHI-NK-hgt" eventType="touchUpInside" id="c1R-jf-CrL"/>
-                                                        <segue destination="Bzd-Dw-C2E" kind="show" id="TzN-rg-sbn"/>
+                                                        <segue destination="Bzd-Dw-C2E" kind="presentation" id="TzN-rg-sbn"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
