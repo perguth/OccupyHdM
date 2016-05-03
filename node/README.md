@@ -4,5 +4,6 @@
 
 ```sh
 npm install
-node index.js
+npm install -g forever
+forever -w index.js
 ```
