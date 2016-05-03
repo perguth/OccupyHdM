@@ -100,14 +100,38 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         self.disableUserAnnotationView(userLocation)
         
-        let accuracy = userLocation.location!.horizontalAccuracy
+        func creditPoints() {
+            var score = NSUserDefaults.standardUserDefaults().integerForKey("score")
+            score += 50
+            self.labelScore.text = String(score)
+            NSUserDefaults.standardUserDefaults().setInteger(score, forKey: "score")
+        }
+        func checkProximity(customAnnotation: CustomAnnotation) {
+            let pinLocation = CLLocation(latitude: customAnnotation.coordinate.latitude, longitude: customAnnotation.coordinate.longitude)
+            let userLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+            let distance = pinLocation.distanceFromLocation(userLocation)
+            let savedDistance = NSUserDefaults.standardUserDefaults().integerForKey("distance")
+            
+            if distance <= Double(savedDistance)
+            {
+                let username = NSUserDefaults.standardUserDefaults().stringForKey("username")
+                let queryString = "/own/" + customAnnotation.name! + "/" + username!
+                RestApiManager.sharedInstance.makeRestRequest(queryString) {
+                    (result: AnyObject) in
+                }
+                
+                self.setAnnotationImage(customAnnotation)
+                creditPoints()
+            }
+        }
         
+        let accuracy = userLocation.location!.horizontalAccuracy
         let savedAccuracy = NSUserDefaults.standardUserDefaults().integerForKey("accuracy")
         
         if accuracy >= Double(savedAccuracy)
         {
-            //self.accuracyWarning.hidden = false
-            //self.accuracyOverlay.hidden = false
+            self.accuracyWarning.hidden = false
+            self.accuracyOverlay.hidden = false
         }
         else
         {
@@ -116,33 +140,9 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             
             for annotation in self.mapView.annotations
             {
-                if annotation.isEqual(userLocation)
-                {
-                    continue
-                }
+                if annotation.isEqual(userLocation) { continue }
                 
-                let customAnnotation = annotation as! CustomAnnotation
-                
-                let pinLocation = CLLocation(latitude: customAnnotation.coordinate.latitude, longitude: customAnnotation.coordinate.longitude)
-                let userLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-                
-                let distance = pinLocation.distanceFromLocation(userLocation)
-                
-                let savedDistance = NSUserDefaults.standardUserDefaults().integerForKey("distance")
-                
-                if distance <= Double(savedDistance)
-                {
-                    let username = NSUserDefaults.standardUserDefaults().stringForKey("username")
-                    let queryString = "/own/" + customAnnotation.name! + "/" + username!
-                    RestApiManager.sharedInstance.makeRestRequest(queryString) {
-                        (result: AnyObject) in
-                    }
-                    self.setAnnotationImage(customAnnotation)
-                    var score = NSUserDefaults.standardUserDefaults().integerForKey("score")
-                    score += 50
-                    self.labelScore.text = String(score)
-                    NSUserDefaults.standardUserDefaults().setInteger(score, forKey: "score")
-                }
+                checkProximity(annotation as! CustomAnnotation)
             }
         }
     }
@@ -167,46 +167,55 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     
     func update()
     {
+        func updateOrSetLocationAnnotation(location: AnyObject) {
+            func updateAnnotation(annotation: CustomAnnotation) {
+                
+            }
+            let name = location["name"] as! String
+            
+            let customAnnotations = NSMutableArray(array: self.mapView.annotations)
+            customAnnotations.removeObject(self.mapView.userLocation)
+            
+            var found = false
+            
+            for annotation in customAnnotations as NSArray as! [CustomAnnotation]
+            {
+                if name == annotation.name
+                {
+                    found = true
+                    annotation.coordinate = CLLocationCoordinate2DMake(
+                        (location["lat"] as! NSNumber).doubleValue,
+                        (location["lon"] as! NSNumber).doubleValue)
+                    annotation.owner = location["owner"] as? String
+                    annotation.title = name + " - Owner: " + annotation.owner!
+                    
+                    self.setAnnotationImage(annotation)
+                }
+            }
+            
+            if !found
+            {
+                print("add annotation")
+                self.mapView.addAnnotation(CustomAnnotation(
+                    coordinate: CLLocationCoordinate2DMake(
+                        (location["lat"] as! NSNumber).doubleValue,
+                        (location["lon"] as! NSNumber).doubleValue),
+                    name: location["name"] as! String,
+                    owner: location["owner"] as! String)
+                )
+            }
+        }
+        
         RestApiManager.sharedInstance.makeRestRequest("/goals") {
         (result: AnyObject) in
             dispatch_async(dispatch_get_main_queue(), {
+                // needs to run on the main thread or else it won't render
+                
                 if let locations = result["locations"] as? NSArray
                 {
                     for location in locations
                     {
-                        let name = location["name"] as! String
-                        
-                        let customAnnotations = NSMutableArray(array: self.mapView.annotations)
-                        customAnnotations.removeObject(self.mapView.userLocation)
-                        
-                        var found = false
-                        
-                        for annotation in customAnnotations as NSArray as! [CustomAnnotation]
-                        {
-                            if name == annotation.name
-                            {
-                                found = true
-                                annotation.coordinate = CLLocationCoordinate2DMake(
-                                    (location["lat"] as! NSNumber).doubleValue,
-                                    (location["lon"] as! NSNumber).doubleValue)
-                                annotation.owner = location["owner"] as? String
-                                annotation.title = name + " - Owner: " + annotation.owner!
-                                
-                                self.setAnnotationImage(annotation)
-                            }
-                        }
-                        
-                        if !found
-                        {
-                            print("add annotation")
-                            self.mapView.addAnnotation(CustomAnnotation(
-                                coordinate: CLLocationCoordinate2DMake(
-                                    (location["lat"] as! NSNumber).doubleValue,
-                                    (location["lon"] as! NSNumber).doubleValue),
-                                name: location["name"] as! String,
-                                owner: location["owner"] as! String)
-                            )
-                        }
+                        updateOrSetLocationAnnotation(location)
                     }
                 }
             })
