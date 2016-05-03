@@ -133,10 +133,6 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="satellite" translatesAutoresizingMaskIntoConstraints="NO" id="ehT-co-OU5">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                             </mapView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hUD-Lj-tYY" userLabel="Accuracy Overlay">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TlC-Bd-t6f" userLabel="Score View">
                                 <rect key="frame" x="0.0" y="560" width="600" height="40"/>
                                 <subviews>
@@ -178,6 +174,10 @@
                                     <constraint firstAttribute="height" constant="40" id="pqu-4R-JcX"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hUD-Lj-tYY" userLabel="Accuracy Overlay">
+                                <rect key="frame" x="0.0" y="64" width="600" height="496"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgC-IN-qx5">
                                 <rect key="frame" x="20" y="80" width="560" height="37"/>
                                 <subviews>
@@ -217,8 +217,8 @@
                             <constraint firstAttribute="trailingMargin" secondItem="dgC-IN-qx5" secondAttribute="trailing" id="dQE-MN-nu1"/>
                             <constraint firstAttribute="trailing" secondItem="ehT-co-OU5" secondAttribute="trailing" id="iQF-ni-Nnu"/>
                             <constraint firstAttribute="trailing" secondItem="TlC-Bd-t6f" secondAttribute="trailing" id="oUa-Ur-HZx"/>
-                            <constraint firstItem="DeB-Oy-EY1" firstAttribute="top" secondItem="hUD-Lj-tYY" secondAttribute="bottom" id="rsm-nv-ik1"/>
                             <constraint firstAttribute="trailing" secondItem="hUD-Lj-tYY" secondAttribute="trailing" id="sJE-tz-GgH"/>
+                            <constraint firstItem="TlC-Bd-t6f" firstAttribute="top" secondItem="hUD-Lj-tYY" secondAttribute="bottom" id="xcT-TQ-nbf"/>
                             <constraint firstItem="hUD-Lj-tYY" firstAttribute="leading" secondItem="Jmg-pt-meE" secondAttribute="leading" id="ymK-me-Brj"/>
                             <constraint firstItem="hUD-Lj-tYY" firstAttribute="top" secondItem="Q5Q-ap-DnR" secondAttribute="bottom" id="zdY-6l-NBb"/>
                         </constraints>
