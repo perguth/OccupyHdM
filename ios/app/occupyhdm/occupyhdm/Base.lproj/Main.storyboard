@@ -54,7 +54,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Fabi" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uko-7y-kab">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uko-7y-kab">
                                 <rect key="frame" x="124" y="337" width="456" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -88,7 +88,9 @@
                             <constraint firstItem="GKc-tg-2gs" firstAttribute="top" secondItem="07y-DQ-Z0w" secondAttribute="bottom" constant="20" id="pJ2-PS-7uW"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="topLayoutConstraint" destination="1cY-Eu-ze3" id="XIL-dw-dhw"/>
                         <outlet property="usernameMissingHint" destination="GKc-tg-2gs" id="kpo-A6-KKX"/>
                         <outlet property="usernameTextfield" destination="Uko-7y-kab" id="CZG-7b-xfc"/>
                         <segue destination="isZ-ws-tRc" kind="show" identifier="showLoginToMain" id="Pp9-pn-HLa"/>
