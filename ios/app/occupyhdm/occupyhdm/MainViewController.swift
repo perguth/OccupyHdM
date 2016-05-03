@@ -168,12 +168,9 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     func update()
     {
         func updateOrSetLocationAnnotation(location: AnyObject) {
-            func updateAnnotation(annotation: CustomAnnotation) {
-                
-            }
             let name = location["name"] as! String
-            
             let customAnnotations = NSMutableArray(array: self.mapView.annotations)
+            
             customAnnotations.removeObject(self.mapView.userLocation)
             
             var found = false
@@ -200,8 +197,8 @@ class MainViewController: UIViewController, MKMapViewDelegate, CLLocationManager
                     coordinate: CLLocationCoordinate2DMake(
                         (location["lat"] as! NSNumber).doubleValue,
                         (location["lon"] as! NSNumber).doubleValue),
-                    name: location["name"] as! String,
-                    owner: location["owner"] as! String)
+                        name: location["name"] as! String,
+                        owner: location["owner"] as! String)
                 )
             }
         }
