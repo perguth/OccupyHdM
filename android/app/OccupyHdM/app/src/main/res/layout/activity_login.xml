@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +8,72 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="occupyhdm.occupyhdm.LoginActivity">
+    tools:context="occupyhdm.occupyhdm.LoginActivity"
+    android:background="#ffffff">
 
-    <!-- Login progress -->
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo"
+        android:layout_alignParentEnd="false" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Welcome to OccupyHdM"
+        android:id="@+id/textView"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Username:"
+            android:id="@+id/textView2"
+            android:layout_alignParentStart="false"
+            android:layout_alignBaseline="@+id/editTextUsername" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextUsername"
+            android:layout_toEndOf="@+id/textView2"
+            android:layout_marginLeft="20dp" />
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/buttonStart"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Please enter a username!"
+        android:id="@+id/textViewUsernameWarning"
+        android:layout_below="@+id/buttonStart"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#ff0000"
+        android:layout_marginTop="20dp"
+        android:visibility="invisible" />
+
+</RelativeLayout>
