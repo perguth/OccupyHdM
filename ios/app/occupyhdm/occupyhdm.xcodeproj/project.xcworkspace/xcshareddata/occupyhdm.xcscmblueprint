@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9CC4655CD72C19397F42C4E696443DAC8DB37082",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9CC4655CD72C19397F42C4E696443DAC8DB37082" : 0,
+    "3EC57C12883F392A8A882BCB832340595F7290B6" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "62CA563F-5C08-4C08-80FC-E3D25D292B14",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9CC4655CD72C19397F42C4E696443DAC8DB37082" : "pma-ss16-occupyhdm\/",
+    "3EC57C12883F392A8A882BCB832340595F7290B6" : "..\/.."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "occupyhdm",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ios\/app\/occupyhdm\/occupyhdm.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/pguth\/HdM-essays",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3EC57C12883F392A8A882BCB832340595F7290B6"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/version.mi.hdm-stuttgart.de\/git\/pma-ss16-occupyhdm",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9CC4655CD72C19397F42C4E696443DAC8DB37082"
+    }
+  ]
+}
