@@ -1,4 +1,4 @@
-package occupyhdm.occupyhdm;
+package occupyhdm.app;
 
 import android.app.Activity;
 
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LoginActivity extends Activity {

@@ -1,4 +1,4 @@
-package occupyhdm.occupyhdm;
+package occupyhdm.app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

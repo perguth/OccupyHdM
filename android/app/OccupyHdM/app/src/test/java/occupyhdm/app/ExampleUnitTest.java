@@ -1,4 +1,4 @@
-package occupyhdm.occupyhdm;
+package occupyhdm.app;
 
 import org.junit.Test;
 
