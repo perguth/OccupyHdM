@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -38,6 +39,7 @@ public class LoginActivity extends Activity {
             SharedPreferences preferences = this.getSharedPreferences(getString(R.string.preferences_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("username", username);
+            editor.commit();
 
             Intent intentStartMain = new Intent(this, MainActivity.class);
             startActivity(intentStartMain);
