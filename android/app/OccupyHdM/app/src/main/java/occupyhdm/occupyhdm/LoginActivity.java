@@ -2,11 +2,11 @@ package occupyhdm.occupyhdm;
 
 import android.app.Activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LoginActivity extends Activity {
@@ -31,7 +31,7 @@ public class LoginActivity extends Activity {
         if (username.equals("")) {
             textViewUsernameWarning.setVisibility(View.VISIBLE);
         } else {
-            textViewUsernameWarning.setVisibility(View.INVISIBLE);
+            textViewUsernameWarning.setVisibility(View.GONE);
         }
     }
 }

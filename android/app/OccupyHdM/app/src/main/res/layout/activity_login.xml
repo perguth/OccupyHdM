@@ -14,7 +14,7 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="200dp"
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewTitle"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/logo"
         android:layout_alignParentEnd="false" />
@@ -25,14 +25,14 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Welcome to OccupyHdM"
         android:id="@+id/textView"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/imageViewTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textViewUsernameWarning"
         android:layout_alignParentStart="true"
         android:id="@+id/relativeLayout"
         android:layout_marginTop="20dp">
@@ -47,22 +47,23 @@
             android:layout_alignBaseline="@+id/editTextUsername" />
 
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editTextUsername"
             android:layout_toEndOf="@+id/textView2"
-            android:layout_marginLeft="20dp" />
-    </RelativeLayout>
+            android:layout_marginLeft="20dp"
+            android:layout_toStartOf="@+id/buttonStart" />
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        android:id="@+id/buttonStart"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:onClick="startGame" />
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text=">"
+            android:id="@+id/buttonStart"
+            android:onClick="startGame"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@+id/editTextUsername" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="fill_parent"
@@ -70,11 +71,11 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Please enter a username!"
         android:id="@+id/textViewUsernameWarning"
-        android:layout_below="@+id/buttonStart"
+        android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:textColor="#ff0000"
         android:layout_marginTop="20dp"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
 </RelativeLayout>
