@@ -2,4 +2,14 @@
     <string name="app_name">OccupyHdM</string>
 
     <string name="preferences_key">preferences</string>
+
+    <string name="settings_description_accuracy">
+        - <b>Accuracy</b> is used to determine if the distance from the user location to the targets should be calculated.
+    </string>
+    <string name="settings_description_distance">
+        - <b>Distance</b> is used to check if the user is in range to activate a target.
+    </string>
+    <string name="settings_description_refreshrate">
+        - <b>Refresh Rate</b> is used to update the state of the goals on the map in a given time interval.
+    </string>
 </resources>
