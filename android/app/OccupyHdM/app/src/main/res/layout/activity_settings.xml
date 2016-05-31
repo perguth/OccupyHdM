@@ -9,4 +9,172 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="occupyhdm.app.SettingsActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Accuracy:"
+        android:id="@+id/textViewAccuracyLabel"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/seekBarAccuracy"
+        android:layout_alignTop="@+id/textViewAccuracyLabel"
+        android:layout_toEndOf="@+id/textViewRefreshRateLabel"
+        android:layout_alignParentEnd="false"
+        android:layout_toStartOf="@+id/textViewAccuracyValue"
+        android:max="75"
+        android:progress="38" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="999"
+        android:id="@+id/textViewAccuracyValue"
+        android:layout_toStartOf="@+id/textViewAccuracyUnit"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="m"
+        android:id="@+id/textViewAccuracyUnit"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/seekBarAccuracy"
+        android:layout_marginLeft="2dp" />
+
+    <TextView
+        android:layout_width="115dp"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Distance:"
+        android:id="@+id/textviewDistanceLabel"
+        android:layout_below="@+id/textViewAccuracyLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/seekBarDistance"
+        android:layout_alignTop="@+id/textviewDistanceLabel"
+        android:layout_toEndOf="@+id/textViewRefreshRateLabel"
+        android:layout_alignParentEnd="false"
+        android:layout_alignRight="@+id/seekBarAccuracy"
+        android:max="45"
+        android:progress="23" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="999"
+        android:id="@+id/textViewDistanceValue"
+        android:layout_alignTop="@+id/seekBarDistance"
+        android:layout_alignParentEnd="false"
+        android:layout_toStartOf="@+id/textViewDistanceUnit"
+        android:layout_alignParentStart="false"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="m"
+        android:id="@+id/textViewDistanceUnit"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/seekBarDistance"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="2dp" />
+
+    <TextView
+        android:layout_width="115dp"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Refresh Rate:"
+        android:id="@+id/textViewRefreshRateLabel"
+        android:layout_below="@+id/textviewDistanceLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/seekBarRefreshRate"
+        android:layout_alignTop="@+id/textViewRefreshRateLabel"
+        android:layout_toEndOf="@+id/textViewRefreshRateLabel"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignRight="@+id/seekBarDistance"
+        android:max="29"
+        android:progress="15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="999"
+        android:id="@+id/textViewRefreshRateValue"
+        android:layout_alignTop="@+id/seekBarRefreshRate"
+        android:gravity="center_vertical"
+        android:layout_toEndOf="@id/seekBarRefreshRate" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="s"
+        android:id="@+id/textViewRefreshRateUnit"
+        android:layout_alignTop="@+id/seekBarRefreshRate"
+        android:layout_alignParentEnd="false"
+        android:gravity="center_vertical"
+        android:layout_toEndOf="@id/textViewRefreshRateValue"
+        android:layout_marginLeft="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Technical details:"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/textViewRefreshRateLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/settings_description_accuracy"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/settings_description_distance"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/settings_description_refreshrate"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
