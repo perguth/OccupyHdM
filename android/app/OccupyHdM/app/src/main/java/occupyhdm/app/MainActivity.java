@@ -14,6 +14,7 @@ import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap map) {
+        this.map = map;
         Log.d("onMapRead", "Callback received");
+        addMarkersToMap();
         LatLng sydney = new LatLng(48.74207, 9.102263);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -43,6 +46,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.setMyLocationEnabled(true);
         map.setMapType(map.MAP_TYPE_SATELLITE);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16.85f));
+        // hide the zoom control as our design is covering it
+        map.getUiSettings().setZoomControlsEnabled(false);
+    }
+
+    private static final LatLng TESTMARKER = new LatLng(48.74207, 9.102263);
+
+    private void addMarkersToMap() {
+        map.addMarker(new MarkerOptions()
+            .position(TESTMARKER)
+            .title("TESTMARKER")
+            .snippet("This is a test")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
     }
 
     @Override
