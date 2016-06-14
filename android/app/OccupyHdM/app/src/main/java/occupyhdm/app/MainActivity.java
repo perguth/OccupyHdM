@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 
+import java.util.concurrent.Callable;
+
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap map;
 
@@ -53,6 +55,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final LatLng TESTMARKER = new LatLng(48.74207, 9.102263);
 
     private void addMarkersToMap() {
+
+        Log.d("JSON", "test started---");
+        RestTask rest = new RestTask(new Callable<Void>() {
+            public Void call() {
+                Log.d("JSON", "the callback function");
+                return null;
+            }
+        });
+        rest.execute("https://pma.perguth.de/goals");
+
         map.addMarker(new MarkerOptions()
             .position(TESTMARKER)
             .title("TESTMARKER")
