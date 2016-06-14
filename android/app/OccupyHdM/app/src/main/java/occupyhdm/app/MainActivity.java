@@ -56,13 +56,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void addMarkersToMap() {
 
-        Log.d("JSON", "test started---");
-        RestTask rest = new RestTask(new Callable<Void>() {
+        class MyCallback extends Callback {
+            @Override
             public Void call() {
-                Log.d("JSON", "the callback function");
+                Log.d("JSON", "The result is: " + result);
                 return null;
             }
-        });
+        }
+
+        Log.d("JSON", "test started---");
+        RestTask rest = new RestTask(new MyCallback());
         rest.execute("https://pma.perguth.de/goals");
 
         map.addMarker(new MarkerOptions()
