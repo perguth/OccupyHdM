@@ -2,6 +2,9 @@
     <string name="app_name">OccupyHdM</string>
 
     <string name="preferences_key">preferences</string>
+    <string name="preferences_accuracy">accuracy</string>
+    <string name="preferences_distance">distance</string>
+    <string name="preferences_refreshRate">refreshRate</string>
 
     <string name="settings_description_accuracy">
         - <b>Accuracy</b> is used to determine if the distance from the user location to the targets should be calculated.
