@@ -1,6 +1,10 @@
 package occupyhdm.app;
 
 import android.os.AsyncTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,16 +26,12 @@ public class RestTask extends AsyncTask<String, Void, String> {
         URL url = null;
         HttpURLConnection urlConnection = null;
         StringBuilder total = new StringBuilder();
+        JSONObject result;
 
         try {
             url = new URL(urlStr);
             urlConnection = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            assert urlConnection != null;
+            // assert urlConnection != null;
             InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
             String line;
