@@ -1,9 +1,11 @@
 package occupyhdm.app;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     protected String mLastUpdateTime;
     protected final static String LOCATION_KEY = "location-key";
     protected final static String LAST_UPDATED_TIME_STRING_KEY = "last-updated-time-string-key";
+    LatLng initialPosition = new LatLng(48.74207, 9.102263);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,46 @@ public class MainActivity extends AppCompatActivity
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
 
+
+        // We could get a preliminary network based location via the following method
+        // but we want to rely on the accurate GPS location
+        // getNetworkLocation();
+
         updateValuesFromBundle(savedInstanceState);
         buildGoogleApiClient();
+    }
+
+    public void getNetworkLocation() {
+        // Acquire a reference to the system Location Manager
+        android.location.LocationManager locationManager = (android.location.LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        android.location.LocationListener locationListener = new android.location.LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                Log.i("location", location.toString());
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        // Register the listener with the Location Manager to receive location updates
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.requestLocationUpdates(android.location.LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+        mCurrentLocation = locationManager.getLastKnownLocation(android.location.LocationManager.NETWORK_PROVIDER);
+
+        Log.i("location", mCurrentLocation.toString());
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -74,7 +116,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
-        LatLng initialPosition = new LatLng(48.74207, 9.102263);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -199,6 +240,8 @@ public class MainActivity extends AppCompatActivity
     public void onLocationChanged(Location location) {
         Log.i("location-update", "Location changed");
 
+        View curtain = findViewById(R.id.curtain);
+        curtain.setVisibility(View.GONE);
     }
 
     @Override
