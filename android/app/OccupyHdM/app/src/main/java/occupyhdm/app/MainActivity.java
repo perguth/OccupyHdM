@@ -167,6 +167,8 @@ public class MainActivity extends AppCompatActivity
                 if (distanceInMeters <= distance) {
                     Log.i("ownage", "claiming location: " + name);
 
+
+
                     String urlString = "https://pma.perguth.de/own/" + name + "/" + username;
                     URL url = new URL(urlString);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -217,16 +219,10 @@ public class MainActivity extends AppCompatActivity
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(initialPosition, 16.85f));
         // hide the zoom control as our design is covering it
         map.getUiSettings().setZoomControlsEnabled(false);
+    }
 
-        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener(){
-            @Override
-            public boolean onMyLocationButtonClick() {
-                Log.i("location-update", "onMyLocationButtonClick()");
-
-                //TODO: Any custom actions
-                return false;
-            }
-        });
+    private void centerCamera() {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(initialPosition, 16.85f));
     }
 
     private void getJsonAndAddMarkers() {
