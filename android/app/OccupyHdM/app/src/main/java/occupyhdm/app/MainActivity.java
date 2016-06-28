@@ -50,10 +50,12 @@ public class MainActivity extends AppCompatActivity
     private GoogleMap map;
     private LatLng initialPosition = new LatLng(48.74207, 9.102263);
     private View curtain;
+    private TextView textViewScore;
     private String username;
     private int accuracy;
     private int distance;
     private int refreshRate;
+    private int score;
     private LocationManager locationManager;
     private LocationListener networkLocationListener;
     private LocationListener gpsLocationListener;
@@ -69,8 +71,12 @@ public class MainActivity extends AppCompatActivity
         getPrefernces();
 
         curtain = findViewById(R.id.curtain);
-        TextView tv = (TextView)findViewById(R.id.textViewUsername);
-        tv.setText(username);
+        TextView textViewScore = (TextView)findViewById(R.id.textViewScore);
+        assert textViewScore != null;
+        textViewScore.setText(String.valueOf(score));
+        TextView textViewUsername = (TextView)findViewById(R.id.textViewUsername);
+        assert textViewUsername != null;
+        textViewUsername.setText(username);
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
@@ -84,6 +90,7 @@ public class MainActivity extends AppCompatActivity
         accuracy = preferences.getInt(getString(R.string.preferences_accuracy), 38);
         distance = preferences.getInt(getString(R.string.preferences_distance), 23);
         refreshRate = preferences.getInt(getString(R.string.preferences_refreshRate), 15);
+        score = preferences.getInt("score", 0);
     }
 
     public void getLocationUpdates() {
@@ -167,8 +174,15 @@ public class MainActivity extends AppCompatActivity
                 if (distanceInMeters <= distance) {
                     Log.i("ownage", "claiming location: " + name);
 
+                    // update locale score
+                    score += 50;
+                    SharedPreferences preferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("score", score);
+                    editor.commit();
+                    textViewScore.setText(String.valueOf(score));
 
-
+                    // call REST
                     String urlString = "https://pma.perguth.de/own/" + name + "/" + username;
                     URL url = new URL(urlString);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
