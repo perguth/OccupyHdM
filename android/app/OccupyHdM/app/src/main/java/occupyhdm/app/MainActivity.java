@@ -20,12 +20,10 @@ import android.view.View;
 import android.widget.TextView;
 
 
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -34,14 +32,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback {
@@ -58,7 +51,6 @@ public class MainActivity extends AppCompatActivity
     private int score;
     private LocationManager locationManager;
     private LocationListener networkLocationListener;
-    private LocationListener gpsLocationListener;
     private JSONArray jsonArray;
     private Long lastRestQueryTime = 0L;
 
@@ -68,7 +60,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getPrefernces();
+        getPreferences();
 
         curtain = findViewById(R.id.curtain);
         TextView textViewScore = (TextView)findViewById(R.id.textViewScore);
@@ -84,12 +76,12 @@ public class MainActivity extends AppCompatActivity
         getLocationUpdates();
     }
 
-    private void getPrefernces () {
-        SharedPreferences preferences = this.getSharedPreferences(getString(R.string.preferences_key), Context.MODE_PRIVATE);
+    private void getPreferences() {
+        SharedPreferences preferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         username = preferences.getString("username", "");
-        accuracy = preferences.getInt(getString(R.string.preferences_accuracy), 38);
-        distance = preferences.getInt(getString(R.string.preferences_distance), 23);
-        refreshRate = preferences.getInt(getString(R.string.preferences_refreshRate), 15);
+        accuracy = preferences.getInt("accuracy", 38);
+        distance = preferences.getInt("distance", 23);
+        refreshRate = preferences.getInt("refreshRate", 15);
         score = preferences.getInt("score", 0);
     }
 
@@ -109,7 +101,7 @@ public class MainActivity extends AppCompatActivity
             public void onProviderEnabled(String provider) {}
             public void onProviderDisabled(String provider) {}
         };
-        gpsLocationListener = new LocationListener() {
+        LocationListener gpsLocationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // unregister network location listener as soon as GPS is more accurate
                 int accuracyDelta = (int) (location.getAccuracy() - currentLocation.getAccuracy());
@@ -179,7 +171,7 @@ public class MainActivity extends AppCompatActivity
                     SharedPreferences preferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putInt("score", score);
-                    editor.commit();
+                    editor.commit(); // we like to do that sync instead of with `apply` async
                     textViewScore.setText(String.valueOf(score));
 
                     // call REST
@@ -201,11 +193,7 @@ public class MainActivity extends AppCompatActivity
                     jsonArray.put(i, entry);
                 }
                 getJsonAndAddMarkers();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
         }
