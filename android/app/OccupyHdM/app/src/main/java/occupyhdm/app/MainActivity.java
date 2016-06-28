@@ -126,11 +126,12 @@ public class MainActivity extends AppCompatActivity
         }
         // Register the listener with the Location Manager to receive location updates
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, refreshRate, 0, networkLocationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, refreshRate, 0, gpsLocationListener);
+        if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)) {
+            // on simulators there may be no GPS
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, refreshRate, 0, gpsLocationListener);
+        }
 
         currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-        Log.i("location", "getLastKnownLocation() -> " + currentLocation.toString());
     }
 
     private void handleOwnage(Location location) {
