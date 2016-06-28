@@ -52,7 +52,8 @@
             android:id="@+id/editTextUsername"
             android:layout_toEndOf="@+id/textView2"
             android:layout_marginLeft="20dp"
-            android:layout_toStartOf="@+id/buttonStart" />
+            android:layout_toStartOf="@+id/buttonStart"
+            android:singleLine="true" />
 
         <Button
             android:layout_width="40dp"
