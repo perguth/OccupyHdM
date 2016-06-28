@@ -1,11 +1,11 @@
 package occupyhdm.app;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
+import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,9 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.util.Date;
-
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
     private GoogleMap map;
@@ -51,56 +48,19 @@ public class MainActivity extends AppCompatActivity
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
 
-
-        // We could get a preliminary network based location via the following method
-        // but we want to rely on the accurate GPS location
-        // getNetworkLocation();
-
         updateValuesFromBundle(savedInstanceState);
         buildGoogleApiClient();
-    }
-
-    public void getNetworkLocation() {
-        // Acquire a reference to the system Location Manager
-        android.location.LocationManager locationManager = (android.location.LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        // Define a listener that responds to location updates
-        android.location.LocationListener locationListener = new android.location.LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                Log.i("location", location.toString());
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-            }
-
-            public void onProviderDisabled(String provider) {
-            }
-        };
-
-        // Register the listener with the Location Manager to receive location updates
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.requestLocationUpdates(android.location.LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-
-        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        mCurrentLocation = locationManager.getLastKnownLocation(android.location.LocationManager.NETWORK_PROVIDER);
-
-        Log.i("location", mCurrentLocation.toString());
     }
 
     protected synchronized void buildGoogleApiClient() {
         Log.i("location-update", "buildGoogleApiClient()");
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this)
-            .addApi(LocationServices.API)
-            .build();
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
         createLocationRequest();
     }
 
@@ -131,7 +91,7 @@ public class MainActivity extends AppCompatActivity
         // hide the zoom control as our design is covering it
         map.getUiSettings().setZoomControlsEnabled(false);
 
-        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener(){
+        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
                 Log.i("location-update", "onMyLocationButtonClick()");
@@ -169,14 +129,14 @@ public class MainActivity extends AppCompatActivity
             String name = entry.getString("name");
 
             map.addMarker(new MarkerOptions()
-                .position(marker)
-                .title(name)
-                .snippet("Owned by " + owner)
-                .icon(
-                    BitmapDescriptorFactory.defaultMarker(
-                        BitmapDescriptorFactory.HUE_AZURE
+                    .position(marker)
+                    .title(name)
+                    .snippet("Owned by " + owner)
+                    .icon(
+                            BitmapDescriptorFactory.defaultMarker(
+                                    BitmapDescriptorFactory.HUE_AZURE
+                            )
                     )
-                )
             );
         }
     }
@@ -208,10 +168,15 @@ public class MainActivity extends AppCompatActivity
                 Log.i("location-update", "need more permissions");
                 return;
             }
-            mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         }
+        // mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        // mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+
         startLocationUpdates();
+        if (BuildConfig.DEBUG) {
+            Log.i("location-update", "******** setMockMode *******");
+            LocationServices.FusedLocationApi.setMockMode(mGoogleApiClient, true);
+        }
     }
 
     protected void startLocationUpdates() {
@@ -223,6 +188,17 @@ public class MainActivity extends AppCompatActivity
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
+
+
+        if (BuildConfig.DEBUG) {
+            Log.i("location-update", "******** inject mocked location *******");
+
+            Location location = new Location("MockedLocation");
+            location.setLatitude(48.74207);
+            location.setLongitude(9.102263);
+
+            LocationServices.FusedLocationApi.setMockLocation(mGoogleApiClient, location);
+        }
     }
 
     protected void stopLocationUpdates() {
@@ -241,11 +217,12 @@ public class MainActivity extends AppCompatActivity
         Log.i("location-update", "Location changed");
 
         View curtain = findViewById(R.id.curtain);
+        assert curtain != null;
         curtain.setVisibility(View.GONE);
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.i("location-update", "Connection failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
     }
 
