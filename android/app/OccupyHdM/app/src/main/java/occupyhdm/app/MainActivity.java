@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, refreshRate, 0, networkLocationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, refreshRate, 0, gpsLocationListener);
 
         currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
