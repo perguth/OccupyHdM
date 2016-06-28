@@ -1,11 +1,14 @@
 package occupyhdm.app;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.SystemClock;
-import android.support.annotation.NonNull;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,84 +17,208 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationListener;
+
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity
-        implements OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
+        implements OnMapReadyCallback {
+    protected final Long REST_CALL_CYCLE = 1000 * 10L;
+    protected Location currentLocation;
     private GoogleMap map;
-    protected GoogleApiClient mGoogleApiClient;
-    protected LocationRequest mLocationRequest;
-    protected Location mCurrentLocation;
-    protected String mLastUpdateTime;
-    protected final static String LOCATION_KEY = "location-key";
-    protected final static String LAST_UPDATED_TIME_STRING_KEY = "last-updated-time-string-key";
-    LatLng initialPosition = new LatLng(48.74207, 9.102263);
+    private LatLng initialPosition = new LatLng(48.74207, 9.102263);
+    private View curtain;
+    private String username;
+    private int accuracy;
+    private int distance;
+    private int refreshRate;
+    private LocationManager locationManager;
+    private LocationListener networkLocationListener;
+    private LocationListener gpsLocationListener;
+    private JSONArray jsonArray;
+    private Long lastRestQueryTime = 0L;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getPrefernces();
+
+        curtain = findViewById(R.id.curtain);
+        TextView tv = (TextView)findViewById(R.id.textViewUsername);
+        tv.setText(username);
+
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
 
-        updateValuesFromBundle(savedInstanceState);
-        buildGoogleApiClient();
+        getLocationUpdates();
     }
 
-    protected synchronized void buildGoogleApiClient() {
-        Log.i("location-update", "buildGoogleApiClient()");
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-
-        createLocationRequest();
+    private void getPrefernces () {
+        SharedPreferences preferences = this.getSharedPreferences(getString(R.string.preferences_key), Context.MODE_PRIVATE);
+        username = preferences.getString("username", "");
+        accuracy = preferences.getInt(getString(R.string.preferences_accuracy), 38);
+        distance = preferences.getInt(getString(R.string.preferences_distance), 23);
+        refreshRate = preferences.getInt(getString(R.string.preferences_refreshRate), 15);
     }
 
-    protected void createLocationRequest() {
-        Log.i("location-update", "createLocationRequest()");
+    public void getLocationUpdates() {
+        // Acquire a reference to the system Location Manager
+        locationManager = (android.location.LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        // Define a listener that responds to location updates
+        networkLocationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                Log.i("location", "onLocationChanged() -> " + location.toString());
+                currentLocation = location;
+                handleOwnage(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onProviderEnabled(String provider) {}
+            public void onProviderDisabled(String provider) {}
+        };
+        gpsLocationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // unregister network location listener as soon as GPS is more accurate
+                int accuracyDelta = (int) (location.getAccuracy() - currentLocation.getAccuracy());
+                boolean isFromSameProvider = location.getProvider().equals(currentLocation.getProvider());
+                if (accuracyDelta < 0 && !isFromSameProvider) {
+                    Log.i("location", "***** removeNetworkListener() -> " + location.toString());
+                    removeNetworkListener();
+                    curtain.setVisibility(View.GONE);
+                }
+
+                currentLocation = location;
+                handleOwnage(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onProviderEnabled(String provider) {}
+            public void onProviderDisabled(String provider) {}
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
+
+        currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        Log.i("location", "getLastKnownLocation() -> " + currentLocation.toString());
+    }
+
+    private void handleOwnage(Location location) {
+        if (location.getAccuracy() > accuracy) {
+            // too inaccurate position, we're not interested
+            return;
+        }
+        if (jsonArray == null) {
+            // if the REST call takes longer than GPS fix then jsonArray will still be null
+            return;
+        }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject entry = jsonArray.getJSONObject(i);
+                String owner = entry.getString("owner");
+                String name = entry.getString("name");
+
+                if (owner == username) {
+                    // we already own it, no need to claim
+                    continue;
+                }
+
+                double lat = entry.getDouble("lat");
+                double lon = entry.getDouble("lon");
+
+                Location targetLocation = new Location("");
+                targetLocation.setLatitude(lat);
+                targetLocation.setLongitude(lon);
+
+                float distanceInMeters =  targetLocation.distanceTo(location);
+
+                if (distanceInMeters <= distance) {
+                    Log.i("ownage", "claiming location: " + name);
+
+                    String urlString = "https://pma.perguth.de/own/" + name + "/" + username;
+                    URL url = new URL(urlString);
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+
+                    try {
+                        // we're not interested in the response
+                        // but the call fires only after...
+                        urlConnection.getHeaderFields();
+                    } finally {
+                        urlConnection.disconnect();
+                    }
+
+                    entry.put("name", username);
+                    jsonArray.put(i, entry);
+                }
+                getJsonAndAddMarkers();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void removeNetworkListener() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Log.i("location", "removeNetworkListener() for networkLocationListener");
+        locationManager.removeUpdates(networkLocationListener);
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("location-update", "need more permissions");
+        getJsonAndAddMarkers();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
-        addMarkersToMap();
-
-        map.setMyLocationEnabled(true);
+        map.setMyLocationEnabled(false);
         map.setMapType(map.MAP_TYPE_SATELLITE);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(initialPosition, 16.85f));
         // hide the zoom control as our design is covering it
         map.getUiSettings().setZoomControlsEnabled(false);
 
-        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener(){
             @Override
             public boolean onMyLocationButtonClick() {
                 Log.i("location-update", "onMyLocationButtonClick()");
@@ -102,7 +229,13 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void addMarkersToMap() {
+    private void getJsonAndAddMarkers() {
+        Long now = System.currentTimeMillis() / 1000L;
+        if (REST_CALL_CYCLE > (lastRestQueryTime - now) && lastRestQueryTime != 0L) {
+            return;
+        }
+        Log.i("rest", "requesting new data");
+
         class JsonReceived extends Callback {
             @Override
             public Void call() {
@@ -117,11 +250,14 @@ public class MainActivity extends AppCompatActivity
 
         RestTask rest = new RestTask(new JsonReceived());
         rest.execute("https://pma.perguth.de/goals");
+
+        lastRestQueryTime = now;
     }
 
     public void addMarkers(String jsonString) throws JSONException {
-        JSONArray jsonArray = new JSONObject(jsonString).getJSONArray("locations");
+        jsonArray = new JSONObject(jsonString).getJSONArray("locations");
 
+        map.clear(); // remove all old markers
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject entry = jsonArray.getJSONObject(i);
             LatLng marker = new LatLng(entry.getDouble("lat"), entry.getDouble("lon"));
@@ -133,8 +269,10 @@ public class MainActivity extends AppCompatActivity
                     .title(name)
                     .snippet("Owned by " + owner)
                     .icon(
-                            BitmapDescriptorFactory.defaultMarker(
-                                    BitmapDescriptorFactory.HUE_AZURE
+                            BitmapDescriptorFactory.fromResource(
+                                    username.equals(owner) ?
+                                            R.drawable.pin_green :
+                                            R.drawable.pin_red
                             )
                     )
             );
@@ -157,124 +295,5 @@ public class MainActivity extends AppCompatActivity
         }
 
         return true;
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i("location-update", "Connected to GoogleApiClient");
-
-        if (mCurrentLocation == null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.i("location-update", "need more permissions");
-                return;
-            }
-        }
-        // mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        // mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-
-        startLocationUpdates();
-        if (BuildConfig.DEBUG) {
-            Log.i("location-update", "******** setMockMode *******");
-            LocationServices.FusedLocationApi.setMockMode(mGoogleApiClient, true);
-        }
-    }
-
-    protected void startLocationUpdates() {
-        Log.i("location-update", "startLocationUpdates()");
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("location-update", "need more permissions");
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
-
-
-        if (BuildConfig.DEBUG) {
-            Log.i("location-update", "******** inject mocked location *******");
-
-            Location location = new Location("MockedLocation");
-            location.setLatitude(48.74207);
-            location.setLongitude(9.102263);
-
-            LocationServices.FusedLocationApi.setMockLocation(mGoogleApiClient, location);
-        }
-    }
-
-    protected void stopLocationUpdates() {
-        Log.i("location-update", "stopLocationUpdates()");
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i("location-update", "Connection suspended, restoring");
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.i("location-update", "Location changed");
-
-        View curtain = findViewById(R.id.curtain);
-        assert curtain != null;
-        curtain.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.i("location-update", "Connection failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
-    }
-
-    @Override
-    protected void onStart() {
-        Log.i("location-update", "onStart() called");
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mGoogleApiClient.isConnected()) {
-            startLocationUpdates();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Stop location updates to save battery,
-        // but don't disconnect the GoogleApiClient object.
-        if (mGoogleApiClient.isConnected()) {
-            stopLocationUpdates();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        mGoogleApiClient.disconnect();
-        super.onStop();
-    }
-
-    private void updateValuesFromBundle(Bundle savedInstanceState) {
-        Log.i("location-updates", "Updating values from bundle");
-
-        if (savedInstanceState != null) {
-            if (savedInstanceState.keySet().contains(LOCATION_KEY)) {
-                // Since LOCATION_KEY was found in the Bundle, we can be sure that mCurrentLocation
-                // is not null.
-                mCurrentLocation = savedInstanceState.getParcelable(LOCATION_KEY);
-            }
-            if (savedInstanceState.keySet().contains(LAST_UPDATED_TIME_STRING_KEY)) {
-                mLastUpdateTime = savedInstanceState.getString(LAST_UPDATED_TIME_STRING_KEY);
-            }
-        }
-    }
-
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelable(LOCATION_KEY, mCurrentLocation);
-        savedInstanceState.putString(LAST_UPDATED_TIME_STRING_KEY, mLastUpdateTime);
-        super.onSaveInstanceState(savedInstanceState);
     }
 }
